@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 
 const roles = ["Desarrollador web", "Creador de sitios", "Front-end Dev"];
@@ -63,8 +63,8 @@ function Star({ star, mouseX, mouseY }) {
   );
 }
 
-// Generamos las estrellas una sola vez fuera del componente
-const STARS = Array.from({ length: 60 }, (_, i) => ({
+// Estrellas: 40 en desktop, 20 en mobile
+const STARS_DESKTOP = Array.from({ length: 40 }, (_, i) => ({
   id: i,
   x: Math.random() * 100,
   y: Math.random() * 100,
@@ -72,9 +72,25 @@ const STARS = Array.from({ length: 60 }, (_, i) => ({
   opacity: Math.random() * 0.5 + 0.1,
   depth: Math.random() * 0.8 + 0.2,
 }));
+const STARS_MOBILE = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 100,
+  y: Math.random() * 100,
+  size: Math.random() * 1.5 + 0.5,
+  opacity: Math.random() * 0.3 + 0.05,
+  depth: 0,
+}));
 
 export default function Hero() {
   const sectionRef = useRef(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setIsDesktop(mq.matches);
+  }, []);
+
+  const STARS = isDesktop ? STARS_DESKTOP : STARS_MOBILE;
 
   // Valores crudos del mouse
   const rawX = useMotionValue(0);
@@ -95,6 +111,7 @@ export default function Hero() {
   const gridY = useTransform(mouseY, [-1, 1], ["-1.5%", "1.5%"]);
 
   useEffect(() => {
+    if (!isDesktop) return;
     const handleMove = (e) => {
       const rect = sectionRef.current?.getBoundingClientRect();
       if (!rect) return;
@@ -105,7 +122,7 @@ export default function Hero() {
     };
     window.addEventListener("mousemove", handleMove);
     return () => window.removeEventListener("mousemove", handleMove);
-  }, [rawX, rawY]);
+  }, [rawX, rawY, isDesktop]);
 
   return (
     <section

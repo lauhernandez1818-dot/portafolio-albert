@@ -41,6 +41,8 @@ export default function ProjectCard({ project, index = 0 }) {
           <motion.img
             src={project.image}
             alt={`Logo ${project.name}`}
+            loading="lazy"
+            decoding="async"
             className="w-4/5 h-4/5 object-contain relative z-10 drop-shadow-2xl"
             animate={hovered ? { scale: 1.08, filter: "drop-shadow(0 0 20px rgba(59,130,246,0.5))" }
                               : { scale: 1,    filter: "drop-shadow(0 0 0px transparent)" }}

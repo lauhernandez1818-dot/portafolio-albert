@@ -128,6 +128,8 @@ export default function About() {
               <img
                 src="/Albert.webp"
                 alt="Albert Rodriguez programando"
+                loading="lazy"
+                decoding="async"
                 onError={(e) => { e.target.onerror = null; e.target.src = "/Albert.png"; }}
                 className="relative w-56 sm:w-64 md:w-72 rounded-2xl border border-white/10 shadow-2xl object-cover"
               />

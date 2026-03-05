@@ -15,8 +15,10 @@ body {
   overflow-x: hidden;
 }
 
-/* ──────────────── CURSOR ──────────────── */
-* { cursor: none; }
+/* ──────────────── CURSOR (solo desktop con mouse) ──────────────── */
+@media (hover: hover) and (pointer: fine) {
+  * { cursor: none; }
+}
 
 .cursor-dot {
   width: 8px;
@@ -45,13 +47,6 @@ body {
   z-index: 9998;
   transform: translate(-50%, -50%);
   transition: transform 0.15s ease-out, width 0.2s, height 0.2s, border-color 0.2s;
-}
-
-a:hover ~ .cursor-ring,
-button:hover ~ .cursor-ring {
-  width: 60px;
-  height: 60px;
-  border-color: rgba(34, 211, 238, 0.6);
 }
 
 /* ──────────────── GRID DE FONDO ──────────────── */
@@ -98,28 +93,6 @@ button:hover ~ .cursor-ring {
   background: linear-gradient(90deg, transparent, rgba(59,130,246,0.5), rgba(34,211,238,0.5), transparent);
 }
 
-/* ──────────────── NÚMERO DE PROYECTO ──────────────── */
-.project-number {
-  font-size: 6rem;
-  line-height: 1;
-  font-weight: 900;
-  background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(167,139,250,0.1));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  user-select: none;
-  position: absolute;
-  top: -1rem;
-  right: 1rem;
-  transition: all 0.3s;
-}
-
-.group:hover .project-number {
-  background: linear-gradient(135deg, rgba(59,130,246,0.5), rgba(34,211,238,0.4));
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
 /* ──────────────── BARRA SKILL ──────────────── */
 @keyframes skill-bar {
   from { width: 0; }
@@ -129,21 +102,6 @@ button:hover ~ .cursor-ring {
   animation: skill-bar 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* ──────────────── GLITCH ──────────────── */
-@keyframes glitch-1 {
-  0%, 100% { clip-path: inset(0 0 98% 0); transform: translate(-2px, 0); }
-  20%       { clip-path: inset(30% 0 50% 0); transform: translate(2px, 0); }
-  40%       { clip-path: inset(70% 0 10% 0); transform: translate(-2px, 0); }
-  60%       { clip-path: inset(10% 0 80% 0); transform: translate(2px, 0); }
-  80%       { clip-path: inset(60% 0 20% 0); transform: translate(-2px, 0); }
-}
-
-/* ──────────────── SCANLINE ──────────────── */
-@keyframes scanline {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
 /* ──────────────── ACCESIBILIDAD ──────────────── */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -151,6 +109,5 @@ button:hover ~ .cursor-ring {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-  * { cursor: auto !important; }
   .cursor-dot, .cursor-ring { display: none; }
 }

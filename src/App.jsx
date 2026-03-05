@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import Header from "./components/Header";
 import ScrollProgress from "./components/ScrollProgress";
@@ -10,8 +10,18 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import LoadingScreen from "./components/LoadingScreen";
 
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setIsDesktop(mq.matches);
+  }, []);
+  return isDesktop;
+}
+
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const isDesktop = useIsDesktop();
 
   return (
     <div className="min-h-screen bg-background">
@@ -20,7 +30,7 @@ export default function App() {
       </AnimatePresence>
       {!loading && (
         <>
-          <Cursor />
+          {isDesktop && <Cursor />}
           <ScrollProgress />
           <Header />
           <BackToTop />
