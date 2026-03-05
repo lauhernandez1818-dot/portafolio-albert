@@ -18,7 +18,7 @@ export const projects = [
   {
     id: 3,
     name: "Inversiones Duvan",
-    desc: "Página web institucional para empresa de inversiones.",
+    desc: "Página web para negocio de almuerzos al mayor.",
     tags: ["Web"],
     image: "/logoduvan.webp",
     webUrl: "https://duvan-premium.vercel.app/",
@@ -26,7 +26,7 @@ export const projects = [
   {
     id: 4,
     name: "Inversiones Duvan",
-    desc: "Catálogo con productos y servicios.",
+    desc: "Catálogo con sus comidas, menús y más.",
     tags: ["Catálogo"],
     image: "/logoduvan.webp",
     catalogUrl: "https://duvan-premium-alnp.vercel.app/",
