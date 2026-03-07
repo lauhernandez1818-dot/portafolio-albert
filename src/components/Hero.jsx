@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { motion, useMotionValue, useTransform, useSpring, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 const roles = ["Desarrollador Web", "Front-end Developer", "Creador de Sitios", "React Developer"];
@@ -44,26 +44,14 @@ const stats = [
   { value: "2",  label: "Ciudades", sub: "VE" },
 ];
 
-/* ── Stars ── */
-function Star({ star, mouseX, mouseY }) {
-  const range = star.depth * 7;
-  const sx = useTransform(mouseX, [-1, 1], [-range, range]);
-  const sy = useTransform(mouseY, [-1, 1], [-range, range]);
-  return (
-    <motion.div
-      className="absolute rounded-full bg-white pointer-events-none"
-      style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, opacity: star.opacity, x: sx, y: sy }}
-    />
-  );
-}
-
-const STARS_DESKTOP = Array.from({ length: 55 }, (_, i) => ({
+/* ── Static stars (plain divs — no framer-motion per star) ── */
+const STARS_DESKTOP = Array.from({ length: 20 }, (_, i) => ({
   id: i, x: Math.random() * 100, y: Math.random() * 100,
-  size: Math.random() * 2.2 + 0.4, opacity: Math.random() * 0.55 + 0.08, depth: Math.random() * 0.8 + 0.2,
+  size: Math.random() * 2 + 0.5, opacity: Math.random() * 0.5 + 0.08,
 }));
-const STARS_MOBILE = Array.from({ length: 22 }, (_, i) => ({
+const STARS_MOBILE = Array.from({ length: 8 }, (_, i) => ({
   id: i, x: Math.random() * 100, y: Math.random() * 100,
-  size: Math.random() * 1.5 + 0.4, opacity: Math.random() * 0.3 + 0.05, depth: 0,
+  size: Math.random() * 1.5 + 0.5, opacity: Math.random() * 0.25 + 0.05,
 }));
 
 export default function Hero() {
@@ -78,31 +66,6 @@ export default function Hero() {
   }, []);
 
   const STARS = isDesktop ? STARS_DESKTOP : STARS_MOBILE;
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const mouseX = useSpring(rawX, { stiffness: 35, damping: 18 });
-  const mouseY = useSpring(rawY, { stiffness: 35, damping: 18 });
-
-  const orb1X = useTransform(mouseX, [-1, 1], ["-5%", "5%"]);
-  const orb1Y = useTransform(mouseY, [-1, 1], ["-5%", "5%"]);
-  const orb2X = useTransform(mouseX, [-1, 1], ["8%", "-8%"]);
-  const orb2Y = useTransform(mouseY, [-1, 1], ["8%", "-8%"]);
-  const orb3X = useTransform(mouseX, [-1, 1], ["-12%", "12%"]);
-  const orb3Y = useTransform(mouseY, [-1, 1], ["-12%", "12%"]);
-  const gridX = useTransform(mouseX, [-1, 1], ["-1.5%", "1.5%"]);
-  const gridY = useTransform(mouseY, [-1, 1], ["-1.5%", "1.5%"]);
-
-  useEffect(() => {
-    if (!isDesktop) return;
-    const handleMove = (e) => {
-      const rect = sectionRef.current?.getBoundingClientRect();
-      if (!rect) return;
-      rawX.set((e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2));
-      rawY.set((e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2));
-    };
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, [rawX, rawY, isDesktop]);
 
   return (
     <section
@@ -110,41 +73,31 @@ export default function Hero() {
       id="inicio"
       className="min-h-screen min-h-[100dvh] flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 px-4 sm:px-6 pt-20 sm:pt-24 pb-40 sm:pb-32 relative overflow-hidden"
     >
-      {/* Grid parallax */}
-      <motion.div
-        className="absolute inset-0 bg-grid pointer-events-none"
-        style={prefersReducedMotion || isMobile ? undefined : { x: gridX, y: gridY }}
-      />
+      {/* Grid */}
+      <div className="absolute inset-0 bg-grid pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-[#070711] via-transparent to-[#070711] pointer-events-none" />
 
       {/* Stars */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {STARS.map((star) =>
-          prefersReducedMotion || !isDesktop ? (
-            <div key={star.id} className="absolute rounded-full bg-white"
-              style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, opacity: star.opacity }} />
-          ) : (
-            <Star key={star.id} star={star} mouseX={mouseX} mouseY={mouseY} />
-          )
-        )}
+        {STARS.map((star) => (
+          <div key={star.id} className="absolute rounded-full bg-white"
+            style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, opacity: star.opacity }} />
+        ))}
       </div>
 
       {/* Orbs */}
       <motion.div className="absolute top-1/4 right-0 w-[35rem] h-[35rem] rounded-full blur-[130px] pointer-events-none"
-        style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)", opacity: 0.28,
-          x: prefersReducedMotion || isMobile ? 0 : orb1X, y: prefersReducedMotion || isMobile ? 0 : orb1Y }}
+        style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)", opacity: 0.28 }}
         animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.15, 1], opacity: [0.22, 0.38, 0.22] }}
         transition={{ duration: 6, repeat: Infinity }} />
 
       <motion.div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] rounded-full blur-[130px] pointer-events-none"
-        style={{ background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)", opacity: 0.22,
-          x: prefersReducedMotion || isMobile ? 0 : orb2X, y: prefersReducedMotion || isMobile ? 0 : orb2Y }}
+        style={{ background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)", opacity: 0.22 }}
         animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.2, 1], opacity: [0.18, 0.32, 0.18] }}
         transition={{ duration: 7, repeat: Infinity }} />
 
       <motion.div className="absolute top-1/3 left-1/3 w-[18rem] h-[18rem] rounded-full blur-[100px] pointer-events-none"
-        style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)", opacity: 0.15,
-          x: prefersReducedMotion || isMobile ? 0 : orb3X, y: prefersReducedMotion || isMobile ? 0 : orb3Y }}
+        style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)", opacity: 0.15 }}
         animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.3, 1] }}
         transition={{ duration: 5, repeat: Infinity }} />
 
