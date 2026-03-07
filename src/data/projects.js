@@ -6,6 +6,15 @@ export const projects = [
     tags: ["Web"],
     image: "/logologistics.webp",
     webUrl: "https://jj-logistic.vercel.app/",
+    githubUrl: "https://github.com/lauhernandez1818-dot/JJ-LOGISTIC",
+    detail:
+      "Sitio institucional para una empresa de logística y transporte. Presenta servicios, flota y contacto de forma clara y profesional para captar clientes del sector.",
+    highlights: [
+      "Diseño corporativo y responsive",
+      "Secciones de servicios y presentación",
+      "Integración de formulario o contacto",
+      "Optimizado para móviles",
+    ],
   },
   {
     id: 2,
@@ -14,6 +23,15 @@ export const projects = [
     tags: ["Web"],
     image: "/logosafepet.webp",
     webUrl: "https://safepet-premium1.vercel.app/",
+    githubUrl: "https://github.com/lauhernandez1818-dot/Safepet1",
+    detail:
+      "Web para negocio de veterinaria y cuidado de mascotas. Comunica servicios, confianza y cercanía con los dueños de mascotas en la zona.",
+    highlights: [
+      "Landing orientada a servicios veterinarios",
+      "Diseño amigable y accesible",
+      "Información de contacto y ubicación",
+      "Enfoque en conversión de clientes",
+    ],
   },
   {
     id: 3,
@@ -22,6 +40,15 @@ export const projects = [
     tags: ["Web"],
     image: "/logoduvan.webp",
     webUrl: "https://duvan-premium.vercel.app/",
+    githubUrl: "https://github.com/lauhernandez1818-dot/duvan-premium",
+    detail:
+      "Página web para negocio de almuerzos al mayor. Presenta el negocio, menús y opciones de pedido para empresas y clientes frecuentes.",
+    highlights: [
+      "Presentación del negocio y oferta",
+      "Información de menús y precios",
+      "Diseño claro para pedidos",
+      "Responsive y rápido",
+    ],
   },
   {
     id: 4,
@@ -30,5 +57,15 @@ export const projects = [
     tags: ["Catálogo"],
     image: "/logoduvan.webp",
     catalogUrl: "https://duvan-premium-alnp.vercel.app/",
+    webUrl: "https://duvan-premium-alnp.vercel.app/",
+    githubUrl: "https://github.com/lauhernandez1818-dot/duvan-premium",
+    detail:
+      "Catálogo tipo link-in-bio para Inversiones Duvan. Un solo enlace con todas las comidas, menús y opciones para que los clientes pidan fácil desde el celular.",
+    highlights: [
+      "Un solo enlace para compartir",
+      "Catálogo de comidas y menús",
+      "Enlaces a WhatsApp o pedidos",
+      "Ideal para redes y negocios locales",
+    ],
   },
 ];

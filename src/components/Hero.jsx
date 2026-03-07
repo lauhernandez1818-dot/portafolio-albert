@@ -2,9 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useTransform, useSpring, useReducedMotion } from "framer-motion";
 import { useIsMobile } from "../hooks/useIsMobile";
 
-const roles = ["Desarrollador web", "Creador de sitios", "Front-end Dev"];
+const roles = ["Desarrollador Web", "Front-end Developer", "Creador de Sitios", "React Developer"];
 const techStack = ["HTML", "CSS", "JavaScript", "React", "Tailwind", "Supabase", "Firebase", "Backend"];
 
+/* ── Typewriter ── */
 function Typewriter({ texts }) {
   const [idx, setIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
@@ -13,7 +14,7 @@ function Typewriter({ texts }) {
   useEffect(() => {
     const current = texts[idx];
     if (!deleting && displayed === current) {
-      const t = setTimeout(() => setDeleting(true), 1800);
+      const t = setTimeout(() => setDeleting(true), 2000);
       return () => clearTimeout(t);
     }
     if (deleting && displayed === "") {
@@ -21,7 +22,7 @@ function Typewriter({ texts }) {
       setIdx((i) => (i + 1) % texts.length);
       return;
     }
-    const speed = deleting ? 45 : 80;
+    const speed = deleting ? 40 : 75;
     const t = setTimeout(() => {
       setDisplayed(deleting ? current.slice(0, displayed.length - 1) : current.slice(0, displayed.length + 1));
     }, speed);
@@ -31,55 +32,38 @@ function Typewriter({ texts }) {
   return (
     <span>
       {displayed}
-      <span className="border-r-2 border-cyan ml-0.5 animate-pulse"> </span>
+      <span className="border-r-2 border-cyan-400 ml-0.5 animate-pulse"> </span>
     </span>
   );
 }
 
+/* ── Stats ── */
 const stats = [
-  { value: "8+", label: "meses" },
-  { value: "4", label: "proyectos" },
-  { value: "2", label: "ciudades" },
+  { value: "8+", label: "Meses", sub: "de experiencia" },
+  { value: "4",  label: "Proyectos", sub: "lanzados" },
+  { value: "2",  label: "Ciudades", sub: "VE" },
 ];
 
-// Estrella individual con su propio parallax
+/* ── Stars ── */
 function Star({ star, mouseX, mouseY }) {
   const range = star.depth * 7;
   const sx = useTransform(mouseX, [-1, 1], [-range, range]);
   const sy = useTransform(mouseY, [-1, 1], [-range, range]);
-
   return (
     <motion.div
       className="absolute rounded-full bg-white pointer-events-none"
-      style={{
-        left: `${star.x}%`,
-        top: `${star.y}%`,
-        width: star.size,
-        height: star.size,
-        opacity: star.opacity,
-        x: sx,
-        y: sy,
-      }}
+      style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, opacity: star.opacity, x: sx, y: sy }}
     />
   );
 }
 
-// Estrellas: 40 en desktop, 20 en mobile
-const STARS_DESKTOP = Array.from({ length: 40 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 2 + 0.5,
-  opacity: Math.random() * 0.5 + 0.1,
-  depth: Math.random() * 0.8 + 0.2,
+const STARS_DESKTOP = Array.from({ length: 55 }, (_, i) => ({
+  id: i, x: Math.random() * 100, y: Math.random() * 100,
+  size: Math.random() * 2.2 + 0.4, opacity: Math.random() * 0.55 + 0.08, depth: Math.random() * 0.8 + 0.2,
 }));
-const STARS_MOBILE = Array.from({ length: 20 }, (_, i) => ({
-  id: i,
-  x: Math.random() * 100,
-  y: Math.random() * 100,
-  size: Math.random() * 1.5 + 0.5,
-  opacity: Math.random() * 0.3 + 0.05,
-  depth: 0,
+const STARS_MOBILE = Array.from({ length: 22 }, (_, i) => ({
+  id: i, x: Math.random() * 100, y: Math.random() * 100,
+  size: Math.random() * 1.5 + 0.4, opacity: Math.random() * 0.3 + 0.05, depth: 0,
 }));
 
 export default function Hero() {
@@ -94,16 +78,11 @@ export default function Hero() {
   }, []);
 
   const STARS = isDesktop ? STARS_DESKTOP : STARS_MOBILE;
-
-  // Valores crudos del mouse
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
-
-  // Suavizados tipo agua
   const mouseX = useSpring(rawX, { stiffness: 35, damping: 18 });
   const mouseY = useSpring(rawY, { stiffness: 35, damping: 18 });
 
-  // Orbes
   const orb1X = useTransform(mouseX, [-1, 1], ["-5%", "5%"]);
   const orb1Y = useTransform(mouseY, [-1, 1], ["-5%", "5%"]);
   const orb2X = useTransform(mouseX, [-1, 1], ["8%", "-8%"]);
@@ -118,10 +97,8 @@ export default function Hero() {
     const handleMove = (e) => {
       const rect = sectionRef.current?.getBoundingClientRect();
       if (!rect) return;
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      rawX.set((e.clientX - cx) / (rect.width / 2));
-      rawY.set((e.clientY - cy) / (rect.height / 2));
+      rawX.set((e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2));
+      rawY.set((e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2));
     };
     window.addEventListener("mousemove", handleMove);
     return () => window.removeEventListener("mousemove", handleMove);
@@ -133,96 +110,76 @@ export default function Hero() {
       id="inicio"
       className="min-h-screen min-h-[100dvh] flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 px-4 sm:px-6 pt-20 sm:pt-24 pb-40 sm:pb-32 relative overflow-hidden"
     >
-      {/* Grid con parallax */}
+      {/* Grid parallax */}
       <motion.div
         className="absolute inset-0 bg-grid pointer-events-none"
         style={prefersReducedMotion || isMobile ? undefined : { x: gridX, y: gridY }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#070711] via-transparent to-[#070711] pointer-events-none" />
 
-      {/* Estrellas con parallax */}
+      {/* Stars */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {STARS.map((star) =>
           prefersReducedMotion || !isDesktop ? (
-            <div
-              key={star.id}
-              className="absolute rounded-full bg-white"
-              style={{
-                left: `${star.x}%`,
-                top: `${star.y}%`,
-                width: star.size,
-                height: star.size,
-                opacity: star.opacity,
-              }}
-            />
+            <div key={star.id} className="absolute rounded-full bg-white"
+              style={{ left: `${star.x}%`, top: `${star.y}%`, width: star.size, height: star.size, opacity: star.opacity }} />
           ) : (
             <Star key={star.id} star={star} mouseX={mouseX} mouseY={mouseY} />
           )
         )}
       </div>
 
-      {/* Orbe azul */}
-      <motion.div
-        className="absolute top-1/4 right-0 w-[30rem] h-[30rem] rounded-full blur-[120px] pointer-events-none opacity-30"
-        style={{
-          background: "radial-gradient(circle, #3B82F6 0%, transparent 70%)",
-          x: prefersReducedMotion || isMobile ? 0 : orb1X,
-          y: prefersReducedMotion || isMobile ? 0 : orb1Y,
-        }}
-        animate={
-          prefersReducedMotion || isMobile
-            ? { opacity: 0.25 }
-            : { scale: [1, 1.15, 1], opacity: [0.25, 0.4, 0.25] }
-        }
-        transition={{ duration: 6, repeat: Infinity }}
-      />
+      {/* Orbs */}
+      <motion.div className="absolute top-1/4 right-0 w-[35rem] h-[35rem] rounded-full blur-[130px] pointer-events-none"
+        style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)", opacity: 0.28,
+          x: prefersReducedMotion || isMobile ? 0 : orb1X, y: prefersReducedMotion || isMobile ? 0 : orb1Y }}
+        animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.15, 1], opacity: [0.22, 0.38, 0.22] }}
+        transition={{ duration: 6, repeat: Infinity }} />
 
-      {/* Orbe morado */}
-      <motion.div
-        className="absolute -bottom-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-[120px] pointer-events-none opacity-20"
-        style={{
-          background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)",
-          x: prefersReducedMotion || isMobile ? 0 : orb2X,
-          y: prefersReducedMotion || isMobile ? 0 : orb2Y,
-        }}
-        animate={
-          prefersReducedMotion || isMobile
-            ? { opacity: 0.25 }
-            : { scale: [1, 1.2, 1], opacity: [0.2, 0.35, 0.2] }
-        }
-        transition={{ duration: 7, repeat: Infinity }}
-      />
+      <motion.div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] rounded-full blur-[130px] pointer-events-none"
+        style={{ background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)", opacity: 0.22,
+          x: prefersReducedMotion || isMobile ? 0 : orb2X, y: prefersReducedMotion || isMobile ? 0 : orb2Y }}
+        animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.2, 1], opacity: [0.18, 0.32, 0.18] }}
+        transition={{ duration: 7, repeat: Infinity }} />
 
-      {/* Orbe cyan */}
-      <motion.div
-        className="absolute top-1/3 left-1/3 w-[16rem] h-[16rem] rounded-full blur-[90px] pointer-events-none opacity-15"
-        style={{
-          background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)",
-          x: prefersReducedMotion || isMobile ? 0 : orb3X,
-          y: prefersReducedMotion || isMobile ? 0 : orb3Y,
-        }}
-        animate={
-          prefersReducedMotion || isMobile
-            ? { opacity: 0.2 }
-            : { scale: [1, 1.3, 1] }
-        }
-        transition={{ duration: 5, repeat: Infinity }}
-      />
+      <motion.div className="absolute top-1/3 left-1/3 w-[18rem] h-[18rem] rounded-full blur-[100px] pointer-events-none"
+        style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)", opacity: 0.15,
+          x: prefersReducedMotion || isMobile ? 0 : orb3X, y: prefersReducedMotion || isMobile ? 0 : orb3Y }}
+        animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.3, 1] }}
+        transition={{ duration: 5, repeat: Infinity }} />
 
-      {/* ── TEXTO ── */}
+      {/* ══ TEXT COLUMN ══ */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="flex-1 max-w-2xl relative z-10 order-2 lg:order-1"
       >
-        <div className="mb-4 h-7 flex items-center">
-          <span className="text-accent text-sm sm:text-base font-semibold uppercase tracking-widest">
+        {/* Availability badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.15 }}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-6 text-xs font-bold"
+          style={{
+            background: "rgba(34,197,94,0.1)",
+            border: "1px solid rgba(34,197,94,0.3)",
+            color: "rgb(74,222,128)",
+          }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+          Disponible para proyectos
+        </motion.div>
+
+        {/* Typewriter */}
+        <div className="mb-3 h-7 flex items-center">
+          <span className="text-indigo-400 text-sm sm:text-base font-semibold uppercase tracking-widest">
             <Typewriter texts={roles} />
           </span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-text-primary leading-[1.05] tracking-tight">
+        {/* Headline */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.04] tracking-tight">
           Hola, soy
           <br />
           <span className="gradient-text">Albert Rodriguez</span>
@@ -230,36 +187,39 @@ export default function Hero() {
 
         <div className="section-line my-6 w-48" />
 
+        {/* Tagline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-base sm:text-lg text-text-secondary max-w-lg leading-relaxed"
+          className="text-base sm:text-lg text-white/55 max-w-lg leading-relaxed"
         >
           Convierto ideas en sitios web que{" "}
-          <span className="text-text-primary font-semibold">funcionan, se ven bien</span>
+          <span className="text-white font-semibold">funcionan, se ven increíbles</span>
           {" "}y{" "}
-          <span className="text-cyan font-semibold">generan resultados</span>.
+          <span className="text-cyan-400 font-semibold">traen clientes reales</span>.
         </motion.p>
 
+        {/* Mini stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.55 }}
+          transition={{ delay: 0.52 }}
           className="flex gap-6 mt-8"
         >
           {stats.map((s, i) => (
             <div key={i} className="flex flex-col">
               <span className="text-2xl sm:text-3xl font-black gradient-text">{s.value}</span>
-              <span className="text-xs text-text-secondary uppercase tracking-wider">{s.label}</span>
+              <span className="text-xs text-white/40 uppercase tracking-wider">{s.label}</span>
             </div>
           ))}
         </motion.div>
 
+        {/* Tech stack pills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.65 }}
+          transition={{ delay: 0.62 }}
           className="mt-6 flex flex-wrap gap-2"
         >
           {techStack.map((tech, i) => (
@@ -267,47 +227,52 @@ export default function Hero() {
               key={tech}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7 + i * 0.06 }}
-              whileHover={{ scale: 1.1, y: -3, boxShadow: "0 0 20px rgba(34,211,238,0.25)" }}
-              className="px-3 py-1.5 text-xs font-semibold bg-surface/80 text-cyan rounded-full border border-cyan/30 backdrop-blur-sm cursor-default"
+              transition={{ delay: 0.68 + i * 0.055 }}
+              whileHover={{ scale: 1.12, y: -3, boxShadow: "0 0 20px rgba(34,211,238,0.3)" }}
+              className="px-3 py-1.5 text-xs font-semibold rounded-full cursor-default"
+              style={{
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(34,211,238,0.25)",
+                color: "rgba(34,211,238,0.9)",
+              }}
             >
               {tech}
             </motion.span>
           ))}
         </motion.div>
 
+        {/* CTA buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85 }}
+          transition={{ delay: 0.82 }}
           className="mt-10 flex flex-wrap gap-4"
         >
           <motion.a
             href="#proyectos"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(59,130,246,0.5)" }}
+            className="btn-glow inline-flex items-center gap-2.5 px-7 py-3.5 text-white font-bold rounded-xl text-sm sm:text-base"
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent to-cyan-dark text-white font-bold rounded-xl shadow-[0_0_25px_rgba(59,130,246,0.35)] text-sm sm:text-base"
           >
-            Ver proyectos
-            <motion.span
-              animate={{ x: [0, 4, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
-              →
-            </motion.span>
+            Ver mis proyectos
+            <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
           </motion.a>
           <motion.a
             href="#contacto"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(167,139,250,0.3)" }}
+            whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(139,92,246,0.3)" }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-2 px-6 py-3 border-2 border-purple/50 hover:border-purple text-text-primary font-semibold rounded-xl backdrop-blur-sm text-sm sm:text-base transition-colors"
+            className="inline-flex items-center gap-2 px-7 py-3.5 font-semibold rounded-xl text-sm sm:text-base transition-all duration-300"
+            style={{
+              border: "1px solid rgba(139,92,246,0.4)",
+              color: "rgba(255,255,255,0.8)",
+              background: "rgba(139,92,246,0.08)",
+            }}
           >
-            Contactar
+            Contáctame
           </motion.a>
         </motion.div>
       </motion.div>
 
-      {/* ── IMAGEN ── */}
+      {/* ══ IMAGE COLUMN ══ */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9, x: 40 }}
         animate={{ opacity: 1, scale: 1, x: 0 }}
@@ -316,90 +281,81 @@ export default function Hero() {
       >
         <motion.div
           className="relative"
-          animate={
-            prefersReducedMotion || isMobile ? { y: 0 } : { y: [0, -10, 0] }
-          }
-          transition={
-            prefersReducedMotion || isMobile
-              ? undefined
-              : { duration: 5, repeat: Infinity, ease: "easeInOut" }
-          }
+          style={isMobile ? { transform: "scale(1.12)", transformOrigin: "center center" } : undefined}
+          animate={prefersReducedMotion || isMobile ? { y: 0 } : { y: [0, -12, 0] }}
+          transition={prefersReducedMotion || isMobile ? undefined : { duration: 5, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="absolute -inset-6 rounded-3xl opacity-50"
-               style={{ background: "conic-gradient(from 0deg, #3B82F6, #8B5CF6, #22D3EE, #3B82F6)", filter: "blur(40px)" }} />
-          <motion.img
+          {/* Glow ring behind image */}
+          <div className="absolute -inset-6 rounded-3xl opacity-55"
+            style={{ background: "conic-gradient(from 0deg, #6366f1, #8B5CF6, #22D3EE, #6366f1)", filter: "blur(44px)" }} />
+
+          <img
             src="/inicio.webp"
             alt="Albert Rodriguez"
             className="relative w-full rounded-2xl border border-white/10 shadow-2xl object-contain"
-            style={{ imageRendering: "pixelated" }}
-            whileHover={{ scale: 1.04 }}
-            transition={{ duration: 0.3 }}
           />
+
+          {/* Location chip */}
           <motion.div
-            className="absolute -right-2 bottom-4 sm:right-4 sm:bottom-6 flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-md rounded-xl border border-accent/30 shadow-lg"
+            className="absolute right-3 bottom-4 flex items-center gap-2 px-3 py-2 rounded-xl border shadow-lg"
+            style={{ background: "rgba(7,7,17,0.85)", backdropFilter: "blur(12px)", borderColor: "rgba(99,102,241,0.3)" }}
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 1.2 }}
-            whileHover={{ scale: 1.05 }}
           >
-            <span className="w-2 h-2 rounded-full bg-emerald animate-pulse flex-shrink-0" />
-            <span className="text-xs text-text-primary font-semibold whitespace-nowrap">La Guaira · Caracas</span>
+            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+            <span className="text-xs text-white/80 font-semibold whitespace-nowrap">La Guaira · Caracas</span>
+          </motion.div>
+
+          {/* Projects done chip */}
+          <motion.div
+            className="absolute left-3 top-4 flex items-center gap-2 px-3 py-2 rounded-xl border shadow-lg"
+            style={{ background: "rgba(7,7,17,0.85)", backdropFilter: "blur(12px)", borderColor: "rgba(34,211,238,0.25)" }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.4 }}
+          >
+            <span className="text-base">🚀</span>
+            <span className="text-xs text-white/80 font-semibold">4 sitios lanzados</span>
           </motion.div>
         </motion.div>
       </motion.div>
 
-      {/* ── SCROLL INDICATOR ── */}
+      {/* Scroll indicator */}
       <motion.a
         href="#proyectos"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2.2 }}
-        className="absolute bottom-4 sm:bottom-8 left-0 right-0 mx-auto w-fit flex flex-col items-center gap-3 z-10 lg:bottom-8"
+        transition={{ delay: 2.4 }}
+        className="absolute bottom-4 sm:bottom-8 left-0 right-0 mx-auto w-fit flex flex-col items-center gap-3 z-10"
       >
         <motion.p
           animate={{ opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 2.5, repeat: Infinity }}
-          className="text-xs text-text-secondary/60 uppercase text-center"
+          className="text-[10px] text-white/40 uppercase text-center"
           style={{ letterSpacing: "0.3em" }}
         >
-          descubre mi trabajo
+          Descubre mi trabajo
         </motion.p>
-
         <div className="flex flex-col items-center gap-0.5">
           {[0, 1, 2].map((i) => (
-            <motion.svg
-              key={i}
-              width="20"
-              height="12"
-              viewBox="0 0 20 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <motion.svg key={i} width="18" height="11" viewBox="0 0 20 12" fill="none"
               animate={{ opacity: [0.2, 1, 0.2], y: [0, 4, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.18 }}
-            >
-              <path
-                d="M1 1L10 10L19 1"
-                stroke="url(#chev)"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.18 }}>
+              <path d="M1 1L10 10L19 1" stroke="url(#chev)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
               <defs>
                 <linearGradient id="chev" x1="0" y1="0" x2="20" y2="0">
-                  <stop offset="0%" stopColor="#3B82F6" />
+                  <stop offset="0%" stopColor="#6366f1" />
                   <stop offset="100%" stopColor="#22D3EE" />
                 </linearGradient>
               </defs>
             </motion.svg>
           ))}
         </div>
-
-        <motion.div
-          className="w-px h-8 bg-gradient-to-b from-cyan/60 to-transparent"
+        <motion.div className="w-px h-8 bg-gradient-to-b from-indigo-500/60 to-transparent"
           animate={{ scaleY: [0, 1, 0], opacity: [0, 1, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, delay: 0.4 }}
-          style={{ transformOrigin: "top" }}
-        />
+          style={{ transformOrigin: "top" }} />
       </motion.a>
     </section>
   );

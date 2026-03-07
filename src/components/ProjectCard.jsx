@@ -2,101 +2,136 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useIsMobile } from "../hooks/useIsMobile";
 
-export default function ProjectCard({ project, index = 0 }) {
-  const linkUrl = project.webUrl || project.catalogUrl || "#";
+const tagStyle = (tag) => {
+  if (tag === "Catálogo") return "bg-cyan-500/15 text-cyan-400 border-cyan-500/30";
+  if (tag === "Web")      return "bg-blue-500/15  text-blue-400  border-blue-500/30";
+  return "bg-violet-500/15 text-violet-400 border-violet-500/30";
+};
+
+export default function ProjectCard({ project, index = 0, onSelect }) {
   const [hovered, setHovered] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const isMobile = useIsMobile();
-  const enableHoverEffects = !(prefersReducedMotion || isMobile);
+  const fx = !(prefersReducedMotion || isMobile);
 
   return (
     <motion.article
       variants={{
         hidden: { opacity: 0, y: 50 },
-        show: {
-          opacity: 1,
-          y: 0,
-          transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-        },
+        show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
       }}
       className="group relative"
-      onHoverStart={enableHoverEffects ? () => setHovered(true) : undefined}
-      onHoverEnd={enableHoverEffects ? () => setHovered(false) : undefined}
+      onHoverStart={fx ? () => setHovered(true) : undefined}
+      onHoverEnd={fx   ? () => setHovered(false) : undefined}
     >
-
-      <motion.a
-        href={linkUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="card-glow block bg-surface/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 transition-all duration-500 relative"
-        whileHover={enableHoverEffects ? { y: -8 } : undefined}
-        whileTap={{ scale: 0.98 }}
+      <motion.button
+        type="button"
+        onClick={onSelect}
+        whileHover={fx ? { y: -10 } : undefined}
+        whileTap={{ scale: 0.975 }}
+        className="w-full text-left block rounded-2xl overflow-hidden cursor-pointer relative"
+        style={{
+          background: "linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
+          border: "1px solid rgba(255,255,255,0.07)",
+          boxShadow: hovered && fx
+            ? "0 20px 60px -12px rgba(99,102,241,0.25), 0 0 0 1px rgba(99,102,241,0.2)"
+            : "0 4px 24px -6px rgba(0,0,0,0.4)",
+          transition: "box-shadow 0.4s ease",
+        }}
       >
-        {/* Imagen / logo */}
-        <div className="relative aspect-video overflow-hidden bg-[#0D0D1A] flex items-center justify-center p-8">
-          {/* Efecto shine al hover */}
+        {/* ── IMAGE AREA ── */}
+        <div className="relative aspect-video overflow-hidden flex items-center justify-center p-8"
+          style={{ background: "linear-gradient(150deg, #0d0d22 0%, #080814 100%)" }}>
+
+          {/* animated background orb */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 pointer-events-none"
-            initial={{ x: "-100%" }}
-            animate={
-              enableHoverEffects && hovered
-                ? { x: "200%" }
-                : { x: "-100%" }
-            }
-            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className="absolute inset-0 pointer-events-none"
+            animate={fx && hovered
+              ? { opacity: 1 }
+              : { opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{
+              background: "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(99,102,241,0.15) 0%, transparent 70%)",
+            }}
           />
 
+          {/* subtle dot grid */}
+          <div
+            className="absolute inset-0 opacity-[0.035] pointer-events-none"
+            style={{
+              backgroundImage: "radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)",
+              backgroundSize: "24px 24px",
+            }}
+          />
+
+          {/* shine sweep on hover */}
+          <motion.div
+            className="absolute inset-0 pointer-events-none -skew-x-12"
+            style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }}
+            initial={{ x: "-120%" }}
+            animate={fx && hovered ? { x: "220%" } : { x: "-120%" }}
+            transition={{ duration: 0.55, ease: "easeInOut" }}
+          />
+
+          {/* project logo */}
           <motion.img
             src={project.image}
             alt={`Logo ${project.name}`}
             loading="lazy"
             decoding="async"
-            className="w-4/5 h-4/5 object-contain relative z-10 drop-shadow-2xl"
-            animate={
-              enableHoverEffects && hovered
-                ? { scale: 1.08, filter: "drop-shadow(0 0 20px rgba(59,130,246,0.5))" }
-                : { scale: 1, filter: "drop-shadow(0 0 0px transparent)" }
-            }
-            transition={{ duration: 0.4 }}
+            className="w-4/5 h-4/5 object-contain relative z-10"
+            animate={fx && hovered
+              ? { scale: 1.1, filter: "drop-shadow(0 0 28px rgba(99,102,241,0.55))" }
+              : { scale: 1,   filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.5))" }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           />
 
-          {/* Overlay bottom */}
+          {/* bottom overlay + CTA */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"
-            animate={{ opacity: enableHoverEffects && hovered ? 1 : 0 }}
+            className="absolute inset-x-0 bottom-0 h-2/3 pointer-events-none"
+            style={{ background: "linear-gradient(to top, rgba(8,8,20,0.9), transparent)" }}
+            animate={{ opacity: fx && hovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
           />
-
-          {/* CTA al hover */}
           <motion.span
-            className="absolute bottom-4 right-4 px-4 py-2 bg-gradient-to-r from-accent to-cyan-dark text-white text-xs font-bold rounded-lg z-20 shadow-xl"
-            animate={{
-              opacity: enableHoverEffects && hovered ? 1 : 0,
-              y: enableHoverEffects && hovered ? 0 : 10,
+            className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold text-white pointer-events-none"
+            style={{
+              background: "linear-gradient(135deg, #6366f1, #22d3ee)",
+              boxShadow: "0 4px 20px rgba(99,102,241,0.4)",
             }}
+            animate={{ opacity: fx && hovered ? 1 : 0, y: fx && hovered ? 0 : 8 }}
             transition={{ duration: 0.25 }}
           >
-            {project.catalogUrl ? "Ver catálogo →" : "Ver sitio →"}
+            Ver detalles
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
           </motion.span>
         </div>
 
-        {/* Info */}
-        <div className="p-5 sm:p-6 border-t border-white/5">
-          <div className="flex items-start justify-between gap-4">
+        {/* ── INFO AREA ── */}
+        <div
+          className="px-5 py-4 sm:px-6 sm:py-5 space-y-3"
+          style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+        >
+          <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
-              <h3 className="text-base sm:text-lg font-bold text-text-primary group-hover:text-accent transition-colors duration-300 truncate">
+              <h3 className="text-base sm:text-lg font-bold text-white/90 group-hover:text-white transition-colors duration-300 truncate leading-tight">
                 {project.name}
               </h3>
-              <p className="mt-1 text-text-secondary text-xs sm:text-sm line-clamp-2 leading-relaxed">
+              <p className="mt-1 text-white/40 text-xs sm:text-sm line-clamp-2 leading-relaxed">
                 {project.desc}
               </p>
             </div>
-            {/* Icono externo */}
+
+            {/* expand icon */}
             <motion.div
-              className="flex-shrink-0 w-9 h-9 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center text-accent"
-              animate={hovered ? { backgroundColor: "rgba(59,130,246,0.25)", borderColor: "rgba(59,130,246,0.5)" }
-                                : {}}
+              className="flex-shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-white/40"
+              animate={fx && hovered
+                ? { background: "rgba(99,102,241,0.25)", borderColor: "rgba(99,102,241,0.5)", color: "#a5b4fc" }
+                : { background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)" }}
               transition={{ duration: 0.25 }}
+              style={{ border: "1px solid rgba(255,255,255,0.08)" }}
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -104,22 +139,19 @@ export default function ProjectCard({ project, index = 0 }) {
             </motion.div>
           </div>
 
-          <div className="mt-4 flex flex-wrap gap-2">
+          {/* tags */}
+          <div className="flex flex-wrap gap-1.5">
             {project.tags.map((tag) => (
               <span
                 key={tag}
-                className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border ${
-                  tag === "Catálogo"
-                    ? "bg-cyan/15 text-cyan border-cyan/25"
-                    : "bg-accent/15 text-accent border-accent/25"
-                }`}
+                className={`px-2.5 py-1 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-widest rounded-full border ${tagStyle(tag)}`}
               >
                 {tag}
               </span>
             ))}
           </div>
         </div>
-      </motion.a>
+      </motion.button>
     </motion.article>
   );
 }

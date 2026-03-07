@@ -4,13 +4,14 @@ import { useIsMobile } from "../hooks/useIsMobile";
 
 const socialLinks = [
   { name: "WhatsApp", href: "https://wa.me/584129983853", icon: "whatsapp" },
-  { name: "GitHub", href: "https://github.com/lauhernandez1818-dot", icon: "github" },
+  { name: "GitHub",   href: "https://github.com/lauhernandez1818-dot", icon: "github" },
 ];
 
 const perks = [
-  { icon: "⚡", text: "Respuesta en menos de 24h" },
-  { icon: "🎯", text: "Proyectos a medida, sin plantillas genéricas" },
-  { icon: "📱", text: "Diseño responsive desde el primer día" },
+  { icon: "⚡", title: "Respuesta rápida", text: "En menos de 24 horas" },
+  { icon: "🎯", title: "100% personalizado", text: "Sin plantillas genéricas" },
+  { icon: "📱", title: "Responsive",         text: "Desde el primer día" },
+  { icon: "🚀", title: "Resultados reales",  text: "Diseño que convierte" },
 ];
 
 export default function Contact() {
@@ -27,22 +28,18 @@ export default function Contact() {
 
   return (
     <section id="contacto" className="py-24 md:py-36 px-4 sm:px-6 relative overflow-hidden">
-      {/* Fondo */}
+      {/* Rotating conic orb */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[140px] pointer-events-none opacity-20"
-        style={{ background: "conic-gradient(from 0deg, #3B82F6, #8B5CF6, #22D3EE, #3B82F6)" }}
-        animate={
-          prefersReducedMotion || isMobile
-            ? { rotate: 0 }
-            : { rotate: [0, 360] }
-        }
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-[160px] pointer-events-none opacity-[0.18]"
+        style={{ background: "conic-gradient(from 0deg, #6366f1, #8B5CF6, #22D3EE, #6366f1)" }}
+        animate={prefersReducedMotion || isMobile ? { rotate: 0 } : { rotate: [0, 360] }}
+        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-500/5 to-transparent pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
+      <div className="max-w-5xl mx-auto relative z-10">
 
-        {/* Header */}
+        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -51,43 +48,50 @@ export default function Contact() {
           className="mb-16 text-center"
         >
           <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-cyan/60" />
-            <span className="text-cyan text-xs font-bold uppercase tracking-[4px]">Hablemos</span>
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-cyan/60" />
+            <div className="h-px w-16 bg-gradient-to-r from-transparent to-cyan-500/60" />
+            <span className="text-cyan-400 text-xs font-bold uppercase tracking-[4px]">Hablemos</span>
+            <div className="h-px w-16 bg-gradient-to-l from-transparent to-cyan-500/60" />
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
-            <span className="text-text-primary">¿Tienes un proyecto?</span>
+            <span className="text-white">¿Tienes un proyecto?</span>
             <br />
             <span className="gradient-text">Hagámoslo realidad.</span>
           </h2>
-          <p className="mt-6 text-text-secondary text-sm sm:text-base max-w-xl mx-auto">
-            No esperes más. Cada día sin un sitio web es un cliente que no te conoce.
+          <p className="mt-6 text-white/45 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+            Cada día sin presencia digital es un cliente que tu competencia ya tiene. <br className="hidden sm:block"/>
+            Escribeme hoy y tengamos una conversación sin compromiso.
           </p>
         </motion.div>
 
-        {/* Perks */}
+        {/* Perks grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-12"
         >
           {perks.map((p, i) => (
             <motion.div
-              key={p.text}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              key={p.title}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="flex items-center gap-3 px-4 py-3 bg-surface/50 border border-white/5 rounded-xl backdrop-blur-sm text-sm text-text-secondary"
+              transition={{ delay: i * 0.08 }}
+              whileHover={{ y: -4, boxShadow: "0 16px 40px -12px rgba(99,102,241,0.25)" }}
+              className="flex flex-col items-center text-center gap-2 p-4 rounded-2xl transition-all duration-300"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.06)",
+              }}
             >
-              <span className="text-lg">{p.icon}</span>
-              <span>{p.text}</span>
+              <span className="text-2xl">{p.icon}</span>
+              <span className="text-sm font-bold text-white/80">{p.title}</span>
+              <span className="text-xs text-white/40 leading-tight">{p.text}</span>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Card central */}
+        {/* Contact card */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -95,31 +99,42 @@ export default function Contact() {
           transition={{ delay: 0.2 }}
           className="max-w-2xl mx-auto"
         >
-          <div className="relative p-6 sm:p-8 bg-surface/50 backdrop-blur-sm border border-white/5 rounded-2xl">
-            {/* Borde degradado */}
-            <div className="absolute inset-0 rounded-2xl opacity-20 pointer-events-none"
-                 style={{ background: "linear-gradient(135deg, rgba(59,130,246,0.3), transparent 50%, rgba(34,211,238,0.2))" }} />
+          <div
+            className="relative p-6 sm:p-8 rounded-3xl overflow-hidden"
+            style={{
+              background: "linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(7,7,17,0.95) 60%)",
+              border: "1px solid rgba(99,102,241,0.15)",
+              boxShadow: "0 30px 80px -20px rgba(99,102,241,0.2)",
+            }}
+          >
+            {/* inner glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
-            <p className="text-center text-text-secondary text-sm mb-6">Escríbeme directamente:</p>
+            <p className="text-center text-white/40 text-sm mb-5 uppercase tracking-widest text-[11px] font-bold">Escríbeme directamente</p>
 
-            {/* Email copy */}
+            {/* Email copy button */}
             <motion.button
               onClick={handleCopyEmail}
-              className="w-full flex items-center justify-between gap-4 px-5 py-4 bg-background/60 border border-accent/20 hover:border-cyan/50 rounded-xl text-sm font-medium transition-all duration-300 group"
-              whileHover={{ boxShadow: "0 0 30px rgba(34,211,238,0.15)" }}
+              className="w-full flex items-center justify-between gap-4 px-5 py-4 rounded-2xl text-sm font-medium transition-all duration-300 group"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(99,102,241,0.18)",
+              }}
+              whileHover={{ boxShadow: "0 0 36px rgba(99,102,241,0.25)", borderColor: "rgba(99,102,241,0.4)" }}
               whileTap={{ scale: 0.98 }}
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: "rgba(99,102,241,0.2)", border: "1px solid rgba(99,102,241,0.3)" }}>
+                  <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <span className="text-text-primary truncate">{email}</span>
+                <span className="text-white/75 truncate">{email}</span>
               </div>
               <motion.span
-                className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-lg transition-colors ${
-                  copied ? "bg-emerald/20 text-emerald" : "bg-cyan/20 text-cyan"
+                className={`flex-shrink-0 text-xs font-bold px-3 py-1.5 rounded-xl transition-colors ${
+                  copied ? "bg-green-500/20 text-green-400" : "bg-indigo-500/20 text-indigo-300"
                 }`}
                 animate={copied ? { scale: [1, 1.15, 1] } : {}}
               >
@@ -127,30 +142,29 @@ export default function Contact() {
               </motion.span>
             </motion.button>
 
-            <div className="flex items-center gap-4 mt-4">
+            {/* Divider */}
+            <div className="flex items-center gap-4 my-5">
               <div className="h-px flex-1 bg-white/5" />
-              <span className="text-text-secondary/40 text-xs">o</span>
+              <span className="text-white/25 text-xs">o también</span>
               <div className="h-px flex-1 bg-white/5" />
             </div>
 
-            {/* Social */}
-            <div className="flex gap-3 mt-4">
+            {/* Social buttons */}
+            <div className="flex gap-3">
               {socialLinks.map((link, i) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 bg-background/60 border rounded-xl text-sm font-semibold transition-all duration-300 ${
-                    link.icon === "whatsapp"
-                      ? "border-green-500/20 text-green-400 hover:border-green-500/50 hover:text-green-300"
-                      : "border-white/5 text-text-secondary hover:border-accent/40 hover:text-accent"
-                  }`}
+                  className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-semibold transition-all duration-300"
+                  style={link.icon === "whatsapp"
+                    ? { background: "rgba(34,197,94,0.08)", border: "1px solid rgba(34,197,94,0.2)", color: "rgb(74,222,128)" }
+                    : { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.6)" }
+                  }
                   whileHover={{
                     y: -3,
-                    boxShadow: link.icon === "whatsapp"
-                      ? "0 10px 30px -10px rgba(34,197,94,0.25)"
-                      : "0 10px 30px -10px rgba(59,130,246,0.2)"
+                    boxShadow: link.icon === "whatsapp" ? "0 10px 30px -10px rgba(34,197,94,0.3)" : "0 10px 30px -10px rgba(99,102,241,0.25)",
                   }}
                   whileTap={{ scale: 0.97 }}
                   initial={{ opacity: 0, y: 20 }}
