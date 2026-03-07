@@ -83,7 +83,7 @@ export default function ProjectDetailModal({ project, onClose }) {
       >
         {/* ═══════════════ HERO SECTION ═══════════════ */}
         <div className="relative flex-shrink-0 overflow-hidden"
-          style={{ minHeight: "clamp(180px, 32vh, 300px)" }}>
+          style={{ minHeight: "clamp(120px, 20vh, 200px)", maxHeight: "200px" }}>
 
           {/* animated background orbs */}
           <motion.div
@@ -112,19 +112,26 @@ export default function ProjectDetailModal({ project, onClose }) {
           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a0a18] to-transparent pointer-events-none z-10" />
 
           {/* logo */}
-          <div className="relative z-20 flex items-center justify-center h-full py-10 px-8">
-            <motion.img
-              src={project.image}
-              alt={project.name}
+          <div className="relative z-20 flex items-center justify-center h-full py-6 px-8">
+            <motion.div
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.12, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="rounded-full overflow-hidden flex items-center justify-center"
               style={{
-                maxWidth: "clamp(140px, 30vw, 260px)",
-                filter: "drop-shadow(0 0 48px rgba(99,102,241,0.35)) drop-shadow(0 4px 24px rgba(0,0,0,0.6))",
+                width: "clamp(90px, 15vw, 130px)",
+                height: "clamp(90px, 15vw, 130px)",
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "0 0 32px rgba(99,102,241,0.25)",
               }}
-              className="object-contain"
-            />
+            >
+              <img
+                src={project.image}
+                alt={project.name}
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
           </div>
 
           {/* close button */}
@@ -185,6 +192,30 @@ export default function ProjectDetailModal({ project, onClose }) {
             >
               {project.detail}
             </motion.p>
+
+            {/* tech stack */}
+            {project.techs?.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="flex flex-wrap justify-center gap-2 mt-4"
+              >
+                {project.techs.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-2.5 py-1 text-xs font-semibold rounded-md border"
+                    style={{
+                      background: "rgba(34,211,238,0.1)",
+                      borderColor: "rgba(34,211,238,0.2)",
+                      color: "rgba(34,211,238,0.9)",
+                    }}
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </motion.div>
+            )}
 
             {/* ── divider ── */}
             <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
