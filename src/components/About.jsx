@@ -2,69 +2,15 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useIsMobile } from "../hooks/useIsMobile";
 
-// level: 'poco' | 'medio' | 'alto'
-const skills = [
-  { name: "HTML & CSS",    level: "alto"  },
-  { name: "JavaScript",    level: "alto"  },
-  { name: "React",         level: "alto"  },
-  { name: "Tailwind CSS",  level: "alto"  },
-  { name: "Supabase",      level: "medio" },
-  { name: "Firebase",      level: "medio" },
-  { name: "Backend & APIs",level: "medio" },
+const techStack = [
+  "HTML", "CSS", "JavaScript", "React", "Tailwind CSS", "Node.js", "Express", "Supabase", "Firebase", "APIs REST"
 ];
-
-const LEVEL_CONFIG = {
-  poco:  { label: "Iniciando", dots: 1, color: "rgba(251,191,36,0.9)",  bg: "rgba(251,191,36,0.10)",  border: "rgba(251,191,36,0.3)"  },
-  medio: { label: "Medio",     dots: 2, color: "rgba(34,211,238,0.9)",  bg: "rgba(34,211,238,0.10)",  border: "rgba(34,211,238,0.3)"  },
-  alto:  { label: "Alto",      dots: 3, color: "rgba(99,102,241,0.95)", bg: "rgba(99,102,241,0.13)",  border: "rgba(99,102,241,0.38)" },
-};
 
 const highlights = [
   { num: "8+", label: "Meses", sub: "de experiencia activa" },
-  { num: "4",  label: "Proyectos", sub: "entregados al cliente" },
+  { num: "4",  label: "Proyectos", sub: "lanzados online" },
   { num: "2",  label: "Ciudades",  sub: "La Guaira · Caracas" },
 ];
-
-/* ── Skill badge component ── */
-function SkillBadge({ name, level, delay }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  const cfg = LEVEL_CONFIG[level];
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 10 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ delay, duration: 0.4, ease: "easeOut" }}
-      className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl"
-      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
-    >
-      <span className="text-sm font-semibold text-white/80">{name}</span>
-      <div className="flex items-center gap-2.5 flex-shrink-0">
-        <div className="flex items-center gap-1.5">
-          {[1, 2, 3].map((dot) => (
-            <motion.span
-              key={dot}
-              initial={{ scale: 0 }}
-              animate={inView ? { scale: 1 } : {}}
-              transition={{ delay: delay + dot * 0.08, duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="block w-2.5 h-2.5 rounded-full"
-              style={{
-                background: dot <= cfg.dots ? cfg.color : "rgba(255,255,255,0.1)",
-                boxShadow: dot <= cfg.dots ? `0 0 8px ${cfg.color}` : "none",
-              }}
-            />
-          ))}
-        </div>
-        <span className="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full"
-          style={{ color: cfg.color, background: cfg.bg, border: `1px solid ${cfg.border}` }}>
-          {cfg.label}
-        </span>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function About() {
   const prefersReducedMotion = useReducedMotion();
@@ -190,11 +136,27 @@ export default function About() {
             </p>
 
             {/* Skills */}
-            <div className="space-y-3">
-              <p className="text-[10px] font-bold text-white/30 uppercase tracking-[3px] mb-5">Nivel de habilidades</p>
-              {skills.map((skill, i) => (
-                <SkillBadge key={skill.name} name={skill.name} level={skill.level} delay={i * 0.08} />
-              ))}
+            <div>
+              <p className="text-[10px] font-bold text-white/30 uppercase tracking-[3px] mb-4">Tecnologías Principales</p>
+              <div className="flex flex-wrap gap-2.5">
+                {techStack.map((tech, i) => (
+                  <motion.div
+                    key={tech}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    className="px-4 py-2 text-sm font-semibold rounded-xl"
+                    style={{
+                      background: "rgba(99,102,241,0.08)",
+                      border: "1px solid rgba(99,102,241,0.2)",
+                      color: "rgba(255,255,255,0.8)",
+                    }}
+                  >
+                    {tech}
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>

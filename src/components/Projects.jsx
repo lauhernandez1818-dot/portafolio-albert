@@ -9,12 +9,6 @@ const container = {
   show: { opacity: 1, transition: { staggerChildren: 0.13 } },
 };
 
-const processSteps = [
-  { num: "01", label: "Consulta",   text: "Entiendo tu negocio" },
-  { num: "02", label: "Diseño",     text: "Propuesta visual única" },
-  { num: "03", label: "Desarrollo", text: "Código limpio y rápido" },
-  { num: "04", label: "Entrega",    text: "Listo para generar clientes" },
-];
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
@@ -72,47 +66,7 @@ export default function Projects() {
           ))}
         </motion.div>
 
-        {/* How I work strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="mt-20"
-        >
-          <p className="text-center text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 mb-8">
-            Cómo trabajo
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {processSteps.map((step, i) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.09 }}
-                whileHover={{ y: -4, boxShadow: "0 16px 40px -12px rgba(99,102,241,0.22)" }}
-                className="relative flex flex-col gap-2 p-5 rounded-2xl transition-all duration-300"
-                style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.06)",
-                }}
-              >
-                <span className="text-2xl font-black"
-                  style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.5), rgba(34,211,238,0.4))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-                  {step.num}
-                </span>
-                <span className="text-sm font-bold text-white/80">{step.label}</span>
-                <span className="text-xs text-white/35 leading-snug">{step.text}</span>
 
-                {/* connector arrow (not on last) */}
-                {i < processSteps.length - 1 && (
-                  <div className="hidden sm:block absolute -right-1.5 top-1/2 -translate-y-1/2 text-white/10 text-xs">›</div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
 
       <AnimatePresence>
