@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const socialLinks = [
   { name: "WhatsApp", href: "https://wa.me/584129983853", icon: "whatsapp" },
@@ -15,6 +16,8 @@ const perks = [
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const email = "albertjavier.trabajo@gmail.com";
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -28,7 +31,11 @@ export default function Contact() {
       <motion.div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[140px] pointer-events-none opacity-20"
         style={{ background: "conic-gradient(from 0deg, #3B82F6, #8B5CF6, #22D3EE, #3B82F6)" }}
-        animate={{ rotate: [0, 360] }}
+        animate={
+          prefersReducedMotion || isMobile
+            ? { rotate: 0 }
+            : { rotate: [0, 360] }
+        }
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent/5 to-transparent pointer-events-none" />

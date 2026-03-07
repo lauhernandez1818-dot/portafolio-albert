@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function ProjectCard({ project, index = 0 }) {
   const linkUrl = project.webUrl || project.catalogUrl || "#";
   const [hovered, setHovered] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const enableHoverEffects = !(prefersReducedMotion || isMobile);
 
   return (
     <motion.article
@@ -16,8 +20,8 @@ export default function ProjectCard({ project, index = 0 }) {
         },
       }}
       className="group relative"
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
+      onHoverStart={enableHoverEffects ? () => setHovered(true) : undefined}
+      onHoverEnd={enableHoverEffects ? () => setHovered(false) : undefined}
     >
 
       <motion.a
@@ -25,7 +29,7 @@ export default function ProjectCard({ project, index = 0 }) {
         target="_blank"
         rel="noopener noreferrer"
         className="card-glow block bg-surface/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/5 transition-all duration-500 relative"
-        whileHover={{ y: -8 }}
+        whileHover={enableHoverEffects ? { y: -8 } : undefined}
         whileTap={{ scale: 0.98 }}
       >
         {/* Imagen / logo */}
@@ -34,7 +38,11 @@ export default function ProjectCard({ project, index = 0 }) {
           <motion.div
             className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 pointer-events-none"
             initial={{ x: "-100%" }}
-            animate={hovered ? { x: "200%" } : { x: "-100%" }}
+            animate={
+              enableHoverEffects && hovered
+                ? { x: "200%" }
+                : { x: "-100%" }
+            }
             transition={{ duration: 0.6, ease: "easeInOut" }}
           />
 
@@ -44,22 +52,28 @@ export default function ProjectCard({ project, index = 0 }) {
             loading="lazy"
             decoding="async"
             className="w-4/5 h-4/5 object-contain relative z-10 drop-shadow-2xl"
-            animate={hovered ? { scale: 1.08, filter: "drop-shadow(0 0 20px rgba(59,130,246,0.5))" }
-                              : { scale: 1,    filter: "drop-shadow(0 0 0px transparent)" }}
+            animate={
+              enableHoverEffects && hovered
+                ? { scale: 1.08, filter: "drop-shadow(0 0 20px rgba(59,130,246,0.5))" }
+                : { scale: 1, filter: "drop-shadow(0 0 0px transparent)" }
+            }
             transition={{ duration: 0.4 }}
           />
 
           {/* Overlay bottom */}
           <motion.div
             className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none"
-            animate={{ opacity: hovered ? 1 : 0 }}
+            animate={{ opacity: enableHoverEffects && hovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
           />
 
           {/* CTA al hover */}
           <motion.span
             className="absolute bottom-4 right-4 px-4 py-2 bg-gradient-to-r from-accent to-cyan-dark text-white text-xs font-bold rounded-lg z-20 shadow-xl"
-            animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 10 }}
+            animate={{
+              opacity: enableHoverEffects && hovered ? 1 : 0,
+              y: enableHoverEffects && hovered ? 0 : 10,
+            }}
             transition={{ duration: 0.25 }}
           >
             {project.catalogUrl ? "Ver catálogo →" : "Ver sitio →"}

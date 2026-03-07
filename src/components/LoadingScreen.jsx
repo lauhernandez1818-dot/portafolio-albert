@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const word = "Bienvenido";
 
@@ -13,9 +14,11 @@ const funMessages = [
 export default function LoadingScreen({ onComplete }) {
   const [progress, setProgress] = useState(0);
   const [msgIndex, setMsgIndex] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
-    const duration = 2500;
+    const duration = prefersReducedMotion || isMobile ? 1800 : 2500;
     const interval = 40;
     const step = (100 / duration) * interval;
     let current = 0;
@@ -54,7 +57,11 @@ export default function LoadingScreen({ onComplete }) {
       <motion.div
         className="absolute top-1/4 right-1/4 w-72 h-72 rounded-full blur-[100px] pointer-events-none"
         style={{ background: "radial-gradient(circle, rgba(59,130,246,0.2), transparent)" }}
-        animate={{ scale: [1, 1.2, 1] }}
+        animate={
+          prefersReducedMotion || isMobile
+            ? { opacity: 0.4 }
+            : { scale: [1, 1.2, 1] }
+        }
         transition={{ duration: 3, repeat: Infinity }}
       />
 

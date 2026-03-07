@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const skills = [
   { name: "HTML & CSS", level: 90 },
@@ -47,6 +48,9 @@ function SkillBar({ name, level, delay }) {
 }
 
 export default function About() {
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+
   return (
     <section id="sobre-mi" className="py-24 md:py-36 px-4 sm:px-6 relative overflow-hidden">
       {/* Fondo */}
@@ -54,7 +58,11 @@ export default function About() {
       <motion.div
         className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-15"
         style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)" }}
-        animate={{ opacity: [0.1, 0.2, 0.1] }}
+        animate={
+          prefersReducedMotion || isMobile
+            ? { opacity: 0.15 }
+            : { opacity: [0.1, 0.2, 0.1] }
+        }
         transition={{ duration: 6, repeat: Infinity }}
       />
 
@@ -136,7 +144,11 @@ export default function About() {
               {/* Badge disponible */}
               <motion.div
                 className="absolute -top-3 -right-3 flex items-center gap-1.5 px-3 py-1.5 bg-emerald/20 border border-emerald/40 rounded-full backdrop-blur-sm"
-                animate={{ scale: [1, 1.05, 1] }}
+                animate={
+                  prefersReducedMotion || isMobile
+                    ? { scale: 1 }
+                    : { scale: [1, 1.05, 1] }
+                }
                 transition={{ duration: 2, repeat: Infinity }}
               >
                 <span className="w-2 h-2 rounded-full bg-emerald animate-pulse" />

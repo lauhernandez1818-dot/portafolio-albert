@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef, useMemo } from "react";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, useMotionValue, useTransform, useSpring, useReducedMotion } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const roles = ["Desarrollador web", "Creador de sitios", "Front-end Dev"];
 const techStack = ["HTML", "CSS", "JavaScript", "React", "Tailwind", "Supabase", "Firebase", "Backend"];
@@ -84,6 +85,8 @@ const STARS_MOBILE = Array.from({ length: 20 }, (_, i) => ({
 export default function Hero() {
   const sectionRef = useRef(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -133,15 +136,29 @@ export default function Hero() {
       {/* Grid con parallax */}
       <motion.div
         className="absolute inset-0 bg-grid pointer-events-none"
-        style={{ x: gridX, y: gridY }}
+        style={prefersReducedMotion || isMobile ? undefined : { x: gridX, y: gridY }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
 
       {/* Estrellas con parallax */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {STARS.map((star) => (
-          <Star key={star.id} star={star} mouseX={mouseX} mouseY={mouseY} />
-        ))}
+        {STARS.map((star) =>
+          prefersReducedMotion || !isDesktop ? (
+            <div
+              key={star.id}
+              className="absolute rounded-full bg-white"
+              style={{
+                left: `${star.x}%`,
+                top: `${star.y}%`,
+                width: star.size,
+                height: star.size,
+                opacity: star.opacity,
+              }}
+            />
+          ) : (
+            <Star key={star.id} star={star} mouseX={mouseX} mouseY={mouseY} />
+          )
+        )}
       </div>
 
       {/* Orbe azul */}
@@ -149,10 +166,14 @@ export default function Hero() {
         className="absolute top-1/4 right-0 w-[30rem] h-[30rem] rounded-full blur-[120px] pointer-events-none opacity-30"
         style={{
           background: "radial-gradient(circle, #3B82F6 0%, transparent 70%)",
-          x: orb1X,
-          y: orb1Y,
+          x: prefersReducedMotion || isMobile ? 0 : orb1X,
+          y: prefersReducedMotion || isMobile ? 0 : orb1Y,
         }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.4, 0.25] }}
+        animate={
+          prefersReducedMotion || isMobile
+            ? { opacity: 0.25 }
+            : { scale: [1, 1.15, 1], opacity: [0.25, 0.4, 0.25] }
+        }
         transition={{ duration: 6, repeat: Infinity }}
       />
 
@@ -161,10 +182,14 @@ export default function Hero() {
         className="absolute -bottom-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-[120px] pointer-events-none opacity-20"
         style={{
           background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)",
-          x: orb2X,
-          y: orb2Y,
+          x: prefersReducedMotion || isMobile ? 0 : orb2X,
+          y: prefersReducedMotion || isMobile ? 0 : orb2Y,
         }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.35, 0.2] }}
+        animate={
+          prefersReducedMotion || isMobile
+            ? { opacity: 0.25 }
+            : { scale: [1, 1.2, 1], opacity: [0.2, 0.35, 0.2] }
+        }
         transition={{ duration: 7, repeat: Infinity }}
       />
 
@@ -173,10 +198,14 @@ export default function Hero() {
         className="absolute top-1/3 left-1/3 w-[16rem] h-[16rem] rounded-full blur-[90px] pointer-events-none opacity-15"
         style={{
           background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)",
-          x: orb3X,
-          y: orb3Y,
+          x: prefersReducedMotion || isMobile ? 0 : orb3X,
+          y: prefersReducedMotion || isMobile ? 0 : orb3Y,
         }}
-        animate={{ scale: [1, 1.3, 1] }}
+        animate={
+          prefersReducedMotion || isMobile
+            ? { opacity: 0.2 }
+            : { scale: [1, 1.3, 1] }
+        }
         transition={{ duration: 5, repeat: Infinity }}
       />
 
@@ -287,8 +316,14 @@ export default function Hero() {
       >
         <motion.div
           className="relative"
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          animate={
+            prefersReducedMotion || isMobile ? { y: 0 } : { y: [0, -10, 0] }
+          }
+          transition={
+            prefersReducedMotion || isMobile
+              ? undefined
+              : { duration: 5, repeat: Infinity, ease: "easeInOut" }
+          }
         >
           <div className="absolute -inset-6 rounded-3xl opacity-50"
                style={{ background: "conic-gradient(from 0deg, #3B82F6, #8B5CF6, #22D3EE, #3B82F6)", filter: "blur(40px)" }} />
