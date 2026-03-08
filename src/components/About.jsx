@@ -151,6 +151,24 @@ export default function About() {
                 ))}
               </div>
             </div>
+
+            {/* Gap Filler: Additional Tools & Methodologies */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="mt-10 pt-10 border-t border-white/5"
+            >
+              <p className="text-[10px] font-bold text-white/30 uppercase tracking-[3px] mb-4">Herramientas & Metodologías</p>
+              <div className="flex flex-wrap gap-4 text-white/50 text-xs">
+                <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-indigo-500" /> Git & GitHub</span>
+                <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-violet-500" /> Vercel / Netlify</span>
+                <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-cyan-500" /> Figma</span>
+                <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-indigo-500" /> Agile / SCRUM</span>
+                <span className="flex items-center gap-1.5"><span className="w-1 h-1 rounded-full bg-violet-500" /> Responsive Design</span>
+              </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

@@ -128,6 +128,13 @@ export default function Hero() {
           Disponible para proyectos
         </motion.div>
 
+        {/* Typewriter */}
+        <div className="mb-3 h-7 flex items-center">
+          <span className="text-indigo-400 text-sm sm:text-base font-semibold uppercase tracking-widest">
+            <Typewriter texts={roles} />
+          </span>
+        </div>
+
         {/* Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.04] tracking-tight">
           Hola, soy
