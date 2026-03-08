@@ -144,10 +144,8 @@ export default function Hero() {
           transition={{ ...transition, delay: 0.4 }}
           className="text-base sm:text-lg text-white/55 max-w-lg leading-relaxed"
         >
-          Convierto ideas en sitios web que{" "}
-          <span className="text-white font-semibold">funcionan, se ven increíbles</span>
-          {" "}y{" "}
-          <span className="text-cyan-400 font-semibold">traen clientes reales</span>.
+          Desarrollo web moderno. Interfaces rápidas, código limpio y{" "}
+          <span className="text-cyan-400 font-semibold">experiencias de alto impacto</span>.
         </motion.p>
 
         {/* Mini stats */}
