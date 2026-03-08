@@ -67,11 +67,15 @@ export default function Hero() {
 
   const STARS = isDesktop ? STARS_DESKTOP : STARS_MOBILE;
 
+  const transition = isMobile 
+    ? { duration: 0.3, ease: "easeOut" }
+    : { duration: 0.7, ease: [0.22, 1, 0.36, 1] };
+
   return (
     <section
       ref={sectionRef}
       id="inicio"
-      className="min-h-screen min-h-[100dvh] flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 px-4 sm:px-6 pt-20 sm:pt-24 pb-40 sm:pb-32 relative overflow-hidden"
+      className="min-h-screen min-h-[100dvh] flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 px-4 sm:px-6 pt-20 sm:pt-24 pb-40 sm:pb-32 relative overflow-hidden will-change-transform"
     >
       {/* Grid */}
       <div className="absolute inset-0 bg-grid pointer-events-none" />
@@ -89,23 +93,23 @@ export default function Hero() {
       <motion.div className="absolute top-1/4 right-0 w-[35rem] h-[35rem] rounded-full blur-[130px] pointer-events-none"
         style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)", opacity: 0.28 }}
         animate={prefersReducedMotion || isMobile ? { opacity: 0.15, scale: 1 } : { scale: [1, 1.15, 1], opacity: [0.22, 0.38, 0.22] }}
-        transition={{ duration: 6, repeat: Infinity }} />
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }} />
 
       <motion.div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] rounded-full blur-[130px] pointer-events-none"
         style={{ background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)", opacity: 0.22 }}
         animate={prefersReducedMotion || isMobile ? { opacity: 0.12, scale: 1 } : { scale: [1, 1.2, 1], opacity: [0.18, 0.32, 0.18] }}
-        transition={{ duration: 7, repeat: Infinity }} />
+        transition={{ duration: 7, repeat: Infinity, ease: "linear" }} />
 
       <motion.div className="absolute top-1/3 left-1/3 w-[18rem] h-[18rem] rounded-full blur-[100px] pointer-events-none"
         style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)", opacity: 0.15 }}
         animate={prefersReducedMotion || isMobile ? { opacity: 0.1, scale: 1 } : { scale: [1, 1.3, 1] }}
-        transition={{ duration: 5, repeat: Infinity }} />
+        transition={{ duration: 5, repeat: Infinity, ease: "linear" }} />
 
       {/* ══ TEXT COLUMN ══ */}
       <motion.div
         initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        transition={transition}
         className="flex-1 max-w-2xl relative z-10 order-2 lg:order-1"
       >
         {/* Availability badge */}

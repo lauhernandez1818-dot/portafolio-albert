@@ -25,8 +25,8 @@ export default function Projects() {
       <motion.div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[130px] pointer-events-none opacity-20"
         style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)" }}
-        animate={prefersReducedMotion || isMobile ? { opacity: 0.12 } : { opacity: [0.14, 0.28, 0.14] }}
-        transition={{ duration: 5, repeat: Infinity }}
+        animate={prefersReducedMotion || isMobile ? { opacity: 0.12, scale: 1 } : { opacity: [0.14, 0.28, 0.14] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -36,7 +36,7 @@ export default function Projects() {
           initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={isMobile ? { duration: 0.3 } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">

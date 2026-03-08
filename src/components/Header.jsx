@@ -34,18 +34,18 @@ export default function Header() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, delay: 0.3 }}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
         background: scrolled
-          ? "rgba(7,7,17,0.93)"
-          : "rgba(7,7,17,0.7)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
+          ? "rgba(7,7,17,0.95)"
+          : "rgba(7,7,17,0.8)",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
         borderBottom: scrolled
           ? "1px solid rgba(99,102,241,0.15)"
           : "1px solid rgba(255,255,255,0.04)",
         boxShadow: scrolled ? "0 8px 40px -12px rgba(0,0,0,0.6)" : "none",
       }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'md:backdrop-blur-md' : ''}`}
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
 

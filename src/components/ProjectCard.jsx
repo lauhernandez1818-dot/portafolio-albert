@@ -14,13 +14,17 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
   const isMobile = useIsMobile();
   const fx = !(prefersReducedMotion || isMobile);
 
+  const transition = isMobile 
+    ? { duration: 0.3, ease: "easeOut" } // tween-like for mobile
+    : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }; // spring-like for desktop
+
   return (
     <motion.article
       variants={{
         hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 50 },
-        show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+        show:   { opacity: 1, y: 0, transition },
       }}
-      className="group relative"
+      className="group relative will-change-transform"
       onHoverStart={fx ? () => setHovered(true) : undefined}
       onHoverEnd={fx   ? () => setHovered(false) : undefined}
     >
@@ -32,11 +36,11 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
         className="w-full text-left block rounded-2xl overflow-hidden cursor-pointer relative"
         style={{
           background: "linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          border: isMobile ? "1px solid rgba(255,255,255,0.15)" : "1px solid rgba(255,255,255,0.07)",
           boxShadow: hovered && !isMobile && !prefersReducedMotion
             ? "0 20px 60px -12px rgba(99,102,241,0.25), 0 0 0 1px rgba(99,102,241,0.2)"
-            : "0 4px 24px -6px rgba(0,0,0,0.4)",
-          transition: "box-shadow 0.4s ease",
+            : isMobile ? "none" : "0 4px 24px -6px rgba(0,0,0,0.4)",
+          transition: "box-shadow 0.4s ease, border 0.4s ease",
         }}
       >
         {/* ── IMAGE AREA ── */}

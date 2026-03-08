@@ -17,13 +17,13 @@ export default function About() {
   const isMobile = useIsMobile();
 
   return (
-    <section id="sobre-mi" className="py-24 md:py-36 px-4 sm:px-6 relative overflow-hidden">
+    <section id="sobre-mi" className="py-24 md:py-36 px-4 sm:px-6 relative overflow-hidden will-change-transform">
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-violet-500/5 to-transparent pointer-events-none" />
       <motion.div
         className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-15"
         style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)" }}
         animate={prefersReducedMotion || isMobile ? { opacity: 0.1, scale: 1 } : { opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 6, repeat: Infinity }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
       />
 
       <div className="max-w-6xl mx-auto relative z-10">
@@ -33,7 +33,7 @@ export default function About() {
           initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={isMobile ? { duration: 0.3 } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
