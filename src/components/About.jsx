@@ -120,19 +120,12 @@ export default function About() {
             className="flex-1 w-full"
           >
             <p className="text-white font-semibold text-base sm:text-lg leading-relaxed mb-4">
-              Desarrollador enfocado en crear{" "}
-              <span className="gradient-text">experiencias web con propósito.</span>
+              Desarrollador web enfocado en crear{" "}
+              <span className="gradient-text">soluciones digitales funcionales.</span>
             </p>
-            <p className="text-white/45 leading-relaxed mb-4 text-sm sm:text-base">
-              En estos 8 meses he ayudado a empresas de logística y servicios a digitalizarse,
-              integrando interfaces atractivas con{" "}
-              <span className="text-indigo-400 font-medium">backends robustos</span> y{" "}
-              <span className="text-cyan-400 font-medium">APIs eficientes</span>.
-            </p>
-            <p className="text-white/45 leading-relaxed mb-8 text-sm sm:text-base">
-              No solo construyo sitios web, conecto{" "}
-              <span className="text-white/80 font-medium">marcas con sus usuarios</span>
-              {" "}a través de tecnología y diseño de calidad.
+            <p className="text-white/45 leading-relaxed mb-6 text-sm sm:text-base">
+              Especializado en digitalizar marcas con interfaces modernas,
+              arquitecturas robustas y un alto enfoque en el rendimiento.
             </p>
 
             {/* Skills */}

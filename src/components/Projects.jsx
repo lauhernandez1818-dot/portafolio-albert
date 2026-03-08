@@ -49,7 +49,7 @@ export default function Projects() {
             <span className="gradient-text">que habla solo</span>
           </h2>
           <p className="mt-6 text-white/45 text-sm sm:text-base max-w-lg leading-relaxed">
-            Cada proyecto tiene una historia. Estos son los sitios que he construido para empresas reales en Venezuela — funcionales, rápidos y orientados a resultados.
+            Soluciones digitales orientadas a resultados. Interfaces limpias y funcionales para marcas en crecimiento.
           </p>
         </motion.div>
 
