@@ -6,6 +6,14 @@
 html {
   scroll-behavior: smooth;
   -webkit-tap-highlight-color: transparent;
+  /* Optimization for smooth scroll on mobile */
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -18,6 +26,11 @@ body {
 /* Scroll margin para que el header fijo no tape el contenido */
 #inicio, #proyectos, #sobre-mi, #contacto {
   scroll-margin-top: 5rem;
+}
+
+/* Rendering Isolation */
+#proyectos, #sobre-mi {
+  contain: content;
 }
 
 /* ──────────────── GRID DE FONDO ──────────────── */

@@ -80,16 +80,12 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
           )}
 
           {/* project logo */}
-          <motion.img
+          <img
             src={project.image}
-            alt={`Logo ${project.name}`}
+            alt={project.title}
             loading="lazy"
             decoding="async"
-            className="w-4/5 h-4/5 object-contain relative z-10"
-            animate={fx && hovered && !prefersReducedMotion
-              ? { scale: 1.1, filter: "drop-shadow(0 0 28px rgba(99,102,241,0.55))" }
-              : { scale: 1,   filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.5))" }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
 
           {/* bottom overlay + CTA */}

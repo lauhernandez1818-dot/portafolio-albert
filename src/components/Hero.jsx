@@ -104,19 +104,18 @@ export default function Hero() {
         style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)", opacity: 0.15 }}
         animate={prefersReducedMotion || isMobile ? { opacity: 0.1, scale: 1 } : { scale: [1, 1.3, 1] }}
         transition={{ duration: 5, repeat: Infinity, ease: "linear" }} />
-
       {/* ══ TEXT COLUMN ══ */}
       <motion.div
-        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
+        initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={transition}
         className="flex-1 max-w-2xl relative z-10 order-2 lg:order-1"
       >
         {/* Availability badge */}
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.15 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...transition, delay: 0.2 }}
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-6 text-xs font-bold"
           style={{
             background: "rgba(34,197,94,0.1)",
@@ -127,13 +126,6 @@ export default function Hero() {
           <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
           Disponible para proyectos
         </motion.div>
-
-        {/* Typewriter */}
-        <div className="mb-3 h-7 flex items-center">
-          <span className="text-indigo-400 text-sm sm:text-base font-semibold uppercase tracking-widest">
-            <Typewriter texts={roles} />
-          </span>
-        </div>
 
         {/* Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.04] tracking-tight">
@@ -146,9 +138,9 @@ export default function Hero() {
 
         {/* Tagline */}
         <motion.p
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          transition={{ ...transition, delay: 0.4 }}
           className="text-base sm:text-lg text-white/55 max-w-lg leading-relaxed"
         >
           Convierto ideas en sitios web que{" "}
@@ -159,9 +151,9 @@ export default function Hero() {
 
         {/* Mini stats */}
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.52 }}
+          transition={{ ...transition, delay: 0.52 }}
           className="flex gap-6 mt-8"
         >
           {stats.map((s, i) => (
@@ -174,18 +166,18 @@ export default function Hero() {
 
         {/* Tech stack pills */}
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.62 }}
+          transition={{ ...transition, delay: 0.62 }}
           className="mt-6 flex flex-wrap gap-2"
         >
           {techStack.map((tech, i) => (
             <motion.span
               key={tech}
-              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
+              initial={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.68 + i * 0.055 }}
-              whileHover={isMobile ? undefined : { scale: 1.12, y: -3, boxShadow: "0 0 20px rgba(34,211,238,0.3)" }}
+              whileHover={fx ? { scale: 1.12, y: -3, boxShadow: "0 0 20px rgba(34,211,238,0.3)" } : undefined}
               className="px-3 py-1.5 text-xs font-semibold rounded-full cursor-default"
               style={{
                 background: "rgba(255,255,255,0.05)",
@@ -200,9 +192,9 @@ export default function Hero() {
 
         {/* CTA buttons */}
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.82 }}
+          transition={{ ...transition, delay: 0.82 }}
           className="mt-10 flex flex-wrap gap-4"
         >
           <motion.a
@@ -211,14 +203,14 @@ export default function Hero() {
             whileTap={{ scale: 0.97 }}
           >
             Ver mis proyectos
-            {!prefersReducedMotion && (
+            {!prefersReducedMotion && !isMobile && (
               <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
             )}
-            {prefersReducedMotion && <span>→</span>}
+            {(prefersReducedMotion || isMobile) && <span>→</span>}
           </motion.a>
           <motion.a
             href="#contacto"
-            whileHover={isMobile ? undefined : { scale: 1.04, boxShadow: "0 0 28px rgba(139,92,246,0.3)" }}
+            whileHover={fx ? { scale: 1.04, boxShadow: "0 0 28px rgba(139,92,246,0.3)" } : undefined}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2 px-7 py-3.5 font-semibold rounded-xl text-sm sm:text-base transition-all duration-300"
             style={{
@@ -234,16 +226,16 @@ export default function Hero() {
 
       {/* ══ IMAGE COLUMN ══ */}
       <motion.div
-        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9, x: 40 }}
+        initial={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.9, x: 40 }}
         animate={{ opacity: 1, scale: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ ...transition, delay: 0.2 }}
         className="flex-1 flex justify-center lg:justify-end relative z-10 order-1 lg:order-2 w-full max-w-xs sm:max-w-sm md:max-w-md"
       >
         <motion.div
           className="relative"
           style={isMobile ? { transform: "scale(1.12)", transformOrigin: "center center" } : undefined}
-          animate={prefersReducedMotion || isMobile ? { y: 0 } : { y: [0, -12, 0] }}
-          transition={prefersReducedMotion || isMobile ? undefined : { duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          animate={fx ? { y: [0, -12, 0] } : { y: 0 }}
+          transition={fx ? { duration: 5, repeat: Infinity, ease: "easeInOut" } : undefined}
         >
           {/* Glow ring behind image */}
           <div className="absolute -inset-6 rounded-3xl opacity-55"
@@ -253,6 +245,7 @@ export default function Hero() {
             src="/inicio.webp"
             alt="Albert Rodriguez"
             fetchpriority="high"
+            decoding="sync"
             className="relative w-full rounded-2xl border border-white/10 shadow-2xl object-contain"
           />
 

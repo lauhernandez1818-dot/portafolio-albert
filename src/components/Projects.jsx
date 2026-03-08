@@ -33,9 +33,9 @@ export default function Projects() {
 
         {/* Section header */}
         <motion.div
-          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={isMobile ? { duration: 0.3 } : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-16"
         >
