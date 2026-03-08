@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 const socialLinks = [
-  { name: "WhatsApp", href: "https://wa.me/584129983853", icon: "whatsapp" },
+  { name: "WhatsApp", href: import.meta.env.VITE_WHATSAPP || "#", icon: "whatsapp" },
   { name: "GitHub",   href: "https://github.com/lauhernandez1818-dot", icon: "github" },
 ];
 
@@ -16,7 +16,7 @@ const perks = [
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
-  const email = "albertjavier.trabajo@gmail.com";
+  const email = import.meta.env.VITE_EMAIL || "albert@example.com";
   const prefersReducedMotion = useReducedMotion();
   const isMobile = useIsMobile();
 
