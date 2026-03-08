@@ -22,7 +22,7 @@ export default function About() {
       <motion.div
         className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-15"
         style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)" }}
-        animate={prefersReducedMotion || isMobile ? { opacity: 0.15 } : { opacity: [0.1, 0.2, 0.1] }}
+        animate={prefersReducedMotion || isMobile ? { opacity: 0.1, scale: 1 } : { opacity: [0.1, 0.2, 0.1] }}
         transition={{ duration: 6, repeat: Infinity }}
       />
 
@@ -30,7 +30,7 @@ export default function About() {
 
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -53,7 +53,7 @@ export default function About() {
 
         {/* Stats row */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="grid grid-cols-3 gap-3 sm:gap-6 mb-16"
@@ -61,11 +61,11 @@ export default function About() {
           {highlights.map((item, i) => (
             <motion.div
               key={item.label}
-              initial={{ opacity: 0, y: 20 }}
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -6, boxShadow: "0 20px 40px -15px rgba(99,102,241,0.25)" }}
+              whileHover={isMobile ? undefined : { y: -6, boxShadow: "0 20px 40px -15px rgba(99,102,241,0.25)" }}
               className="p-4 sm:p-6 rounded-2xl text-center transition-all duration-300"
               style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
             >
@@ -81,13 +81,13 @@ export default function About() {
 
           {/* Photo */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex-shrink-0 mx-auto lg:mx-0"
           >
-            <motion.div className="relative" whileHover={{ scale: 1.03 }} transition={{ duration: 0.3 }}>
+            <motion.div className="relative" whileHover={isMobile ? undefined : { scale: 1.03 }} transition={{ duration: 0.3 }}>
               <div className="absolute -inset-3 rounded-2xl opacity-55"
                 style={{ background: "conic-gradient(from 180deg, #6366f1, #8B5CF6, #22D3EE, #6366f1)", filter: "blur(22px)" }} />
               <img

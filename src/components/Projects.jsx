@@ -1,17 +1,22 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, lazy, Suspense } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { projects } from "../data/projects";
 import ProjectCard from "./ProjectCard";
-import ProjectDetailModal from "./ProjectDetailModal";
+import { useIsMobile } from "../hooks/useIsMobile";
 
-const container = {
+// Dynamic import for the modal
+const ProjectDetailModal = lazy(() => import("./ProjectDetailModal"));
+
+const container = (prefersReducedMotion) => ({
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.13 } },
-};
+  show: { opacity: 1, transition: { staggerChildren: prefersReducedMotion ? 0 : 0.13 } },
+});
 
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState(null);
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
 
   return (
     <section id="proyectos" className="py-24 md:py-36 px-4 sm:px-6 relative overflow-hidden">
@@ -20,7 +25,7 @@ export default function Projects() {
       <motion.div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full blur-[130px] pointer-events-none opacity-20"
         style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)" }}
-        animate={{ opacity: [0.14, 0.28, 0.14] }}
+        animate={prefersReducedMotion || isMobile ? { opacity: 0.12 } : { opacity: [0.14, 0.28, 0.14] }}
         transition={{ duration: 5, repeat: Infinity }}
       />
 
@@ -28,7 +33,7 @@ export default function Projects() {
 
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -50,7 +55,7 @@ export default function Projects() {
 
         {/* Projects grid */}
         <motion.div
-          variants={container}
+          variants={container(prefersReducedMotion)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-30px" }}
@@ -71,10 +76,12 @@ export default function Projects() {
 
       <AnimatePresence>
         {selectedProject && (
-          <ProjectDetailModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
+          <Suspense fallback={null}>
+            <ProjectDetailModal
+              project={selectedProject}
+              onClose={() => setSelectedProject(null)}
+            />
+          </Suspense>
         )}
       </AnimatePresence>
     </section>

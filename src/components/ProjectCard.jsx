@@ -17,7 +17,7 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
   return (
     <motion.article
       variants={{
-        hidden: { opacity: 0, y: 50 },
+        hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 50 },
         show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
       }}
       className="group relative"
@@ -33,7 +33,7 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
         style={{
           background: "linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%)",
           border: "1px solid rgba(255,255,255,0.07)",
-          boxShadow: hovered && fx
+          boxShadow: hovered && !isMobile && !prefersReducedMotion
             ? "0 20px 60px -12px rgba(99,102,241,0.25), 0 0 0 1px rgba(99,102,241,0.2)"
             : "0 4px 24px -6px rgba(0,0,0,0.4)",
           transition: "box-shadow 0.4s ease",
@@ -65,13 +65,15 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
           />
 
           {/* shine sweep on hover */}
-          <motion.div
-            className="absolute inset-0 pointer-events-none -skew-x-12"
-            style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }}
-            initial={{ x: "-120%" }}
-            animate={fx && hovered ? { x: "220%" } : { x: "-120%" }}
-            transition={{ duration: 0.55, ease: "easeInOut" }}
-          />
+          {!prefersReducedMotion && (
+            <motion.div
+              className="absolute inset-0 pointer-events-none -skew-x-12"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent)" }}
+              initial={{ x: "-120%" }}
+              animate={fx && hovered ? { x: "220%" } : { x: "-120%" }}
+              transition={{ duration: 0.55, ease: "easeInOut" }}
+            />
+          )}
 
           {/* project logo */}
           <motion.img
@@ -80,7 +82,7 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
             loading="lazy"
             decoding="async"
             className="w-4/5 h-4/5 object-contain relative z-10"
-            animate={fx && hovered
+            animate={fx && hovered && !prefersReducedMotion
               ? { scale: 1.1, filter: "drop-shadow(0 0 28px rgba(99,102,241,0.55))" }
               : { scale: 1,   filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.5))" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -99,7 +101,7 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
               background: "linear-gradient(135deg, #6366f1, #22d3ee)",
               boxShadow: "0 4px 20px rgba(99,102,241,0.4)",
             }}
-            animate={{ opacity: fx && hovered ? 1 : 0, y: fx && hovered ? 0 : 8 }}
+            animate={{ opacity: fx && hovered ? 1 : 0, y: fx && hovered && !prefersReducedMotion ? 0 : 8 }}
             transition={{ duration: 0.25 }}
           >
             Ver detalles

@@ -88,29 +88,29 @@ export default function Hero() {
       {/* Orbs */}
       <motion.div className="absolute top-1/4 right-0 w-[35rem] h-[35rem] rounded-full blur-[130px] pointer-events-none"
         style={{ background: "radial-gradient(circle, #6366f1 0%, transparent 70%)", opacity: 0.28 }}
-        animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.15, 1], opacity: [0.22, 0.38, 0.22] }}
+        animate={prefersReducedMotion || isMobile ? { opacity: 0.15, scale: 1 } : { scale: [1, 1.15, 1], opacity: [0.22, 0.38, 0.22] }}
         transition={{ duration: 6, repeat: Infinity }} />
 
       <motion.div className="absolute -bottom-20 -left-20 w-[30rem] h-[30rem] rounded-full blur-[130px] pointer-events-none"
         style={{ background: "radial-gradient(circle, #8B5CF6 0%, transparent 70%)", opacity: 0.22 }}
-        animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.2, 1], opacity: [0.18, 0.32, 0.18] }}
+        animate={prefersReducedMotion || isMobile ? { opacity: 0.12, scale: 1 } : { scale: [1, 1.2, 1], opacity: [0.18, 0.32, 0.18] }}
         transition={{ duration: 7, repeat: Infinity }} />
 
       <motion.div className="absolute top-1/3 left-1/3 w-[18rem] h-[18rem] rounded-full blur-[100px] pointer-events-none"
         style={{ background: "radial-gradient(circle, #22D3EE 0%, transparent 70%)", opacity: 0.15 }}
-        animate={prefersReducedMotion || isMobile ? {} : { scale: [1, 1.3, 1] }}
+        animate={prefersReducedMotion || isMobile ? { opacity: 0.1, scale: 1 } : { scale: [1, 1.3, 1] }}
         transition={{ duration: 5, repeat: Infinity }} />
 
       {/* ══ TEXT COLUMN ══ */}
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="flex-1 max-w-2xl relative z-10 order-2 lg:order-1"
       >
         {/* Availability badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.85 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.15 }}
           className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-6 text-xs font-bold"
@@ -142,7 +142,7 @@ export default function Hero() {
 
         {/* Tagline */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           className="text-base sm:text-lg text-white/55 max-w-lg leading-relaxed"
@@ -155,7 +155,7 @@ export default function Hero() {
 
         {/* Mini stats */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.52 }}
           className="flex gap-6 mt-8"
@@ -170,7 +170,7 @@ export default function Hero() {
 
         {/* Tech stack pills */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.62 }}
           className="mt-6 flex flex-wrap gap-2"
@@ -178,10 +178,10 @@ export default function Hero() {
           {techStack.map((tech, i) => (
             <motion.span
               key={tech}
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.68 + i * 0.055 }}
-              whileHover={{ scale: 1.12, y: -3, boxShadow: "0 0 20px rgba(34,211,238,0.3)" }}
+              whileHover={isMobile ? undefined : { scale: 1.12, y: -3, boxShadow: "0 0 20px rgba(34,211,238,0.3)" }}
               className="px-3 py-1.5 text-xs font-semibold rounded-full cursor-default"
               style={{
                 background: "rgba(255,255,255,0.05)",
@@ -196,7 +196,7 @@ export default function Hero() {
 
         {/* CTA buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.82 }}
           className="mt-10 flex flex-wrap gap-4"
@@ -207,11 +207,14 @@ export default function Hero() {
             whileTap={{ scale: 0.97 }}
           >
             Ver mis proyectos
-            <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
+            {!prefersReducedMotion && (
+              <motion.span animate={{ x: [0, 5, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>→</motion.span>
+            )}
+            {prefersReducedMotion && <span>→</span>}
           </motion.a>
           <motion.a
             href="#contacto"
-            whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(139,92,246,0.3)" }}
+            whileHover={isMobile ? undefined : { scale: 1.04, boxShadow: "0 0 28px rgba(139,92,246,0.3)" }}
             whileTap={{ scale: 0.97 }}
             className="inline-flex items-center gap-2 px-7 py-3.5 font-semibold rounded-xl text-sm sm:text-base transition-all duration-300"
             style={{
@@ -227,7 +230,7 @@ export default function Hero() {
 
       {/* ══ IMAGE COLUMN ══ */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, x: 40 }}
+        initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9, x: 40 }}
         animate={{ opacity: 1, scale: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
         className="flex-1 flex justify-center lg:justify-end relative z-10 order-1 lg:order-2 w-full max-w-xs sm:max-w-sm md:max-w-md"
@@ -245,6 +248,7 @@ export default function Hero() {
           <img
             src="/inicio.webp"
             alt="Albert Rodriguez"
+            fetchpriority="high"
             className="relative w-full rounded-2xl border border-white/10 shadow-2xl object-contain"
           />
 
