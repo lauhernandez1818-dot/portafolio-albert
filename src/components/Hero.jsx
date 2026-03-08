@@ -59,6 +59,7 @@ export default function Hero() {
   const [isDesktop, setIsDesktop] = useState(false);
   const prefersReducedMotion = useReducedMotion();
   const isMobile = useIsMobile();
+  const fx = !prefersReducedMotion && !isMobile;
 
   useEffect(() => {
     const mq = window.matchMedia("(hover: hover) and (pointer: fine)");

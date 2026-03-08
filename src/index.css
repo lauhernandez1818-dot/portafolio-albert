@@ -28,10 +28,7 @@ body {
   scroll-margin-top: 5rem;
 }
 
-/* Rendering Isolation */
-#proyectos, #sobre-mi {
-  contain: content;
-}
+/* Rendering Isolation removed temporarily for stability */
 
 /* ──────────────── GRID DE FONDO ──────────────── */
 .bg-grid {
