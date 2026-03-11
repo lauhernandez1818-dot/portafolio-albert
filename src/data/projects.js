@@ -42,7 +42,7 @@ export const projects = [
     tags: ["Web"],
     techs: ["React", "Tailwind CSS", "Vite"],
     image: "/logoduvan.webp",
-    webUrl: "https://duvan-premium.vercel.app/",
+    webUrl: "https://duvan.com.ve/",
     githubUrl: "https://github.com/lauhernandez1818-dot/duvan-premium",
     detail:
       "Página web para negocio de almuerzos al mayor. Presenta el negocio, menús y opciones de pedido para empresas y clientes frecuentes.",
