@@ -24,7 +24,7 @@ export const projects = [
     tags: ["Web"],
     techs: ["React", "Vite", "Tailwind CSS", "Framer Motion"],
     image: "/logosafepet.webp",
-    webUrl: "https://safepet-premium1.vercel.app/",
+    webUrl: "https://safepet2021.com/",
     githubUrl: "https://github.com/lauhernandez1818-dot/Safepet1",
     detail:
       "Web para negocio de veterinaria y cuidado de mascotas. Comunica servicios, confianza y cercanía con los dueños de mascotas en la zona.",
