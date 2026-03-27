@@ -17,14 +17,14 @@ const ExternalIcon = () => (
 /* ─── tag colour helper ─── */
 const tagStyle = (tag) => {
   if (tag === "Catálogo") return "bg-cyan-500/15 text-cyan-400 border-cyan-500/30";
-  if (tag === "Web")      return "bg-blue-500/15  text-blue-400  border-blue-500/30";
+  if (tag === "Web") return "bg-blue-500/15  text-blue-400  border-blue-500/30";
   return "bg-violet-500/15 text-violet-400 border-violet-500/30";
 };
 
 export default function ProjectDetailModal({ project, onClose }) {
   if (!project) return null;
 
-  const liveUrl   = project.webUrl || project.catalogUrl;
+  const liveUrl = project.webUrl || project.catalogUrl;
   const isCatalog = Boolean(project.catalogUrl && project.tags?.includes("Catálogo"));
   const scrollRef = useRef(null);
 
@@ -41,17 +41,17 @@ export default function ProjectDetailModal({ project, onClose }) {
 
   /* ── animation variants ── */
   const backdropVariants = {
-    hidden:  { opacity: 0 },
+    hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.25 } },
-    exit:    { opacity: 0, transition: { duration: 0.2 } },
+    exit: { opacity: 0, transition: { duration: 0.2 } },
   };
   const panelVariants = {
-    hidden:  { opacity: 0, scale: 0.94, y: 30 },
-    visible: { opacity: 1, scale: 1,    y: 0,  transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
-    exit:    { opacity: 0, scale: 0.94, y: 20, transition: { duration: 0.25 } },
+    hidden: { opacity: 0, scale: 0.94, y: 30 },
+    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
+    exit: { opacity: 0, scale: 0.94, y: 20, transition: { duration: 0.25 } },
   };
   const listItem = (i) => ({
-    hidden:  { opacity: 0, x: -16 },
+    hidden: { opacity: 0, x: -16 },
     visible: { opacity: 1, x: 0, transition: { delay: 0.18 + i * 0.07, duration: 0.35, ease: "easeOut" } },
   });
 
@@ -108,6 +108,21 @@ export default function ProjectDetailModal({ project, onClose }) {
             }}
           />
 
+          {/* chatbot background image */}
+          {project.isChatbot && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.25 }}
+              className="absolute inset-0 z-0"
+              style={{
+                backgroundImage: `url(${project.image})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                filter: "blur(20px) saturate(1.5)",
+              }}
+            />
+          )}
+
           {/* fade to panel body */}
           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0a0a18] to-transparent pointer-events-none z-10" />
 
@@ -117,13 +132,13 @@ export default function ProjectDetailModal({ project, onClose }) {
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.12, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="rounded-full overflow-hidden flex items-center justify-center"
+              className={`${project.isChatbot ? 'rounded-2xl' : 'rounded-full'} overflow-hidden flex items-center justify-center`}
               style={{
-                width: "clamp(90px, 15vw, 130px)",
-                height: "clamp(90px, 15vw, 130px)",
+                width: project.isChatbot ? "clamp(120px, 20vw, 160px)" : "clamp(90px, 15vw, 130px)",
+                height: project.isChatbot ? "clamp(120px, 20vw, 160px)" : "clamp(90px, 15vw, 130px)",
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(255,255,255,0.08)",
-                boxShadow: "0 0 32px rgba(99,102,241,0.25)",
+                boxShadow: project.isChatbot ? "0 20px 40px rgba(0,0,0,0.5)" : "0 0 32px rgba(99,102,241,0.25)",
               }}
             >
               <img

@@ -4,7 +4,7 @@ import { useIsMobile } from "../hooks/useIsMobile";
 
 const tagStyle = (tag) => {
   if (tag === "Catálogo") return "bg-cyan-500/15 text-cyan-400 border-cyan-500/30";
-  if (tag === "Web")      return "bg-blue-500/15  text-blue-400  border-blue-500/30";
+  if (tag === "Web") return "bg-blue-500/15  text-blue-400  border-blue-500/30";
   return "bg-violet-500/15 text-violet-400 border-violet-500/30";
 };
 
@@ -14,7 +14,7 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
   const isMobile = useIsMobile();
   const fx = !(prefersReducedMotion || isMobile);
 
-  const transition = isMobile 
+  const transition = isMobile
     ? { duration: 0.3, ease: "easeOut" } // tween-like for mobile
     : { duration: 0.6, ease: [0.22, 1, 0.36, 1] }; // spring-like for desktop
 
@@ -22,11 +22,11 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
     <motion.article
       variants={{
         hidden: { opacity: 0, y: prefersReducedMotion ? 0 : 50 },
-        show:   { opacity: 1, y: 0, transition },
+        show: { opacity: 1, y: 0, transition },
       }}
       className="group relative will-change-transform"
       onHoverStart={fx ? () => setHovered(true) : undefined}
-      onHoverEnd={fx   ? () => setHovered(false) : undefined}
+      onHoverEnd={fx ? () => setHovered(false) : undefined}
     >
       <motion.button
         type="button"
@@ -44,8 +44,10 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
         }}
       >
         {/* ── IMAGE AREA ── */}
-        <div className="relative aspect-video overflow-hidden flex items-center justify-center p-8"
-          style={{ background: "linear-gradient(150deg, #0d0d22 0%, #080814 100%)" }}>
+        <div 
+          className={`relative aspect-video overflow-hidden flex items-center justify-center transition-all duration-500 ${project.isChatbot ? 'p-0' : 'p-8'}`}
+          style={{ background: "linear-gradient(150deg, #0d0d22 0%, #080814 100%)" }}
+        >
 
           {/* animated background orb */}
           <motion.div
@@ -85,10 +87,10 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
             alt={`Logo ${project.name}`}
             loading="lazy"
             decoding="async"
-            className="w-4/5 h-4/5 object-contain relative z-10"
+            className={`relative z-10 transition-all duration-500 ${project.isChatbot ? 'w-full h-full object-cover' : 'w-4/5 h-4/5 object-contain'}`}
             animate={fx && hovered && !prefersReducedMotion
-              ? { scale: 1.1, filter: "drop-shadow(0 0 28px rgba(99,102,241,0.55))" }
-              : { scale: 1,   filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.5))" }}
+              ? { scale: project.isChatbot ? 1.05 : 1.1, filter: `drop-shadow(0 0 ${project.isChatbot ? '0px' : '28px'} rgba(99,102,241,0.55))` }
+              : { scale: 1, filter: `drop-shadow(0 ${project.isChatbot ? '0px' : '2px'} 12px rgba(0,0,0,0.5))` }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           />
 
