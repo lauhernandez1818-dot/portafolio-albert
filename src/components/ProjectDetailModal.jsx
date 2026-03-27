@@ -132,13 +132,13 @@ export default function ProjectDetailModal({ project, onClose }) {
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.12, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className={`${project.isChatbot ? 'rounded-2xl' : 'rounded-full'} overflow-hidden flex items-center justify-center`}
+              className="rounded-full overflow-hidden flex items-center justify-center"
               style={{
                 width: project.isChatbot ? "clamp(120px, 20vw, 160px)" : "clamp(90px, 15vw, 130px)",
                 height: project.isChatbot ? "clamp(120px, 20vw, 160px)" : "clamp(90px, 15vw, 130px)",
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(255,255,255,0.08)",
-                boxShadow: project.isChatbot ? "0 20px 40px rgba(0,0,0,0.5)" : "0 0 32px rgba(99,102,241,0.25)",
+                boxShadow: project.isChatbot ? "0 0 40px rgba(0,0,0,0.5)" : "0 0 32px rgba(99,102,241,0.25)",
               }}
             >
               <img

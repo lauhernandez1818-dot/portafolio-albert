@@ -45,16 +45,13 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
       >
         {/* ── IMAGE AREA ── */}
         <div 
-          className={`relative aspect-video overflow-hidden flex items-center justify-center transition-all duration-500 ${project.isChatbot ? 'p-0' : 'p-8'}`}
+          className={`relative aspect-video overflow-hidden flex items-center justify-center transition-all duration-500 ${project.isChatbot ? 'p-2' : 'p-8'}`}
           style={{ background: "linear-gradient(150deg, #0d0d22 0%, #080814 100%)" }}
         >
-
           {/* animated background orb */}
           <motion.div
             className="absolute inset-0 pointer-events-none"
-            animate={fx && hovered
-              ? { opacity: 1 }
-              : { opacity: 0 }}
+            animate={fx && hovered ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.4 }}
             style={{
               background: "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(99,102,241,0.15) 0%, transparent 70%)",
@@ -89,8 +86,8 @@ export default function ProjectCard({ project, index = 0, onSelect }) {
             decoding="async"
             className={`relative z-10 transition-all duration-500 ${project.isChatbot ? 'w-full h-full object-cover' : 'w-4/5 h-4/5 object-contain'}`}
             animate={fx && hovered && !prefersReducedMotion
-              ? { scale: project.isChatbot ? 1.05 : 1.1, filter: `drop-shadow(0 0 ${project.isChatbot ? '0px' : '28px'} rgba(99,102,241,0.55))` }
-              : { scale: 1, filter: `drop-shadow(0 ${project.isChatbot ? '0px' : '2px'} 12px rgba(0,0,0,0.5))` }}
+              ? { scale: project.isChatbot ? 1.05 : 1.1, filter: project.isChatbot ? "none" : "drop-shadow(0 0 28px rgba(99,102,241,0.55))" }
+              : { scale: 1, filter: "drop-shadow(0 2px 12px rgba(0,0,0,0.5))" }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           />
 
