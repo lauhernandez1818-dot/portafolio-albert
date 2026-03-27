@@ -72,4 +72,40 @@ export const projects = [
       "Ideal para redes y negocios locales",
     ],
   },
+  {
+    id: 5,
+    name: "Asistente AI WhatsApp",
+    desc: "Asistente inteligente para atención y ventas en WhatsApp.",
+    tags: ["Chatbot", "AI Integration"],
+    techs: ["Node.js", "GPT-4", "WhatsApp API", "Excel"],
+    image: "/whatsapp_bot.webp",
+    detail:
+      "Desarrollo de un asistente virtual que automatiza la atención al cliente utilizando la tecnología de GPT-4. Se conecta a una base de datos en Excel para consultar stock en tiempo real y guiar al usuario en su compra.",
+    webUrl: "https://wa.me/584220145277",
+    isChatbot: true,
+    highlights: [
+      "Consultas automáticas de inventario",
+      "Respuestas inteligentes con IA",
+      "Disponibilidad 24/7 para clientes",
+      "Fácil de actualizar vía Excel",
+    ],
+  },
+  {
+    id: 6,
+    name: "Chatbot de Instagram",
+    desc: "Automatización de mensajes y captación de clientes.",
+    tags: ["Chatbot", "Automation"],
+    techs: ["Node.js", "Instagram API", "Webhooks"],
+    image: "/instagram_bot.webp",
+    detail:
+      "Solución de respuesta automática para Instagram que utiliza palabras clave para enviar información de productos y precios al instante, mejorando el tiempo de respuesta y la retención de usuarios.",
+    webUrl: "https://www.instagram.com/motorepuestosguru/",
+    isChatbot: true,
+    highlights: [
+      "Respuestas rápidas programadas",
+      "Filtro por palabras clave",
+      "Conexión directa con catálogo",
+      "Optimización de ventas por DM",
+    ],
+  },
 ];

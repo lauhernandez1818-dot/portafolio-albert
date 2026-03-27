@@ -270,27 +270,29 @@ export default function ProjectDetailModal({ project, onClose }) {
               className="flex flex-col sm:flex-row gap-3 pt-1"
             >
               {/* GitHub – ghost */}
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex-1 flex items-center justify-center gap-2.5 py-[14px] px-6 rounded-2xl font-bold text-sm text-white/70 hover:text-white transition-all duration-300"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.08)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255,255,255,0.04)";
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
-                }}
-              >
-                <GithubIcon />
-                Ver código
-              </a>
+              {project.githubUrl && (
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex-1 flex items-center justify-center gap-2.5 py-[14px] px-6 rounded-2xl font-bold text-sm text-white/70 hover:text-white transition-all duration-300"
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.08)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                  }}
+                >
+                  <GithubIcon />
+                  Ver código
+                </a>
+              )}
 
               {/* Live – gradient accent */}
               <a
@@ -311,7 +313,7 @@ export default function ProjectDetailModal({ project, onClose }) {
                   style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)", transform: "skewX(-20deg)" }}
                 />
                 <ExternalIcon />
-                {isCatalog ? "Ver catálogo" : "Ver sitio web"}
+                {isCatalog ? "Ver catálogo" : project.isChatbot ? "Probar el bot" : "Ver sitio web"}
               </a>
             </motion.div>
           </div>
