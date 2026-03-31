@@ -35,7 +35,7 @@ export default function App() {
                 <span className="gradient-text font-black text-base">Albert Rodriguez</span>
                 <span className="text-text-secondary/40 text-xs">Desarrollador web · Venezuela</span>
               </div>
-              <span className="text-text-secondary/30 text-xs">© {new Date().getFullYear()} · Hecho con React + Vite + Tailwind</span>
+              <span className="text-text-secondary/30 text-xs">© {new Date().getFullYear()} · Soluciones digitales de alto impacto</span>
               <a
                 href="#inicio"
                 className="text-text-secondary/50 hover:text-accent text-xs transition-colors flex items-center gap-1.5 group"
