@@ -19,20 +19,19 @@ export const projects = [
   },
   {
     id: 2,
-    name: "Asistente AI WhatsApp",
-    desc: "Asistente inteligente para atención y ventas en WhatsApp.",
-    tags: ["Chatbot", "AI Integration"],
-    techs: ["Node.js", "GPT-4", "WhatsApp API", "Excel"],
-    image: "/whatsapp_bot.webp",
+    name: "VentaPulse",
+    desc: "Plataforma SaaS revolucionaria para optimizar tu negocio.",
+    tags: ["SaaS", "Web"],
+    techs: ["Next.js", "React", "Tailwind CSS", "Supabase"],
+    image: "/logoVenta.png",
+    webUrl: "https://saa-s-six-fawn.vercel.app/",
     detail:
-      "Desarrollo de un asistente virtual que automatiza la atención al cliente utilizando la tecnología de GPT-4. Se conecta a una base de datos en Excel para consultar stock en tiempo real y guiar al usuario en su compra.",
-    webUrl: "https://wa.me/584220145277",
-    isChatbot: true,
+      "VentaPulse es un SaaS revolucionario diseñado para llevar la gestión empresarial y las ventas al siguiente nivel, automatizando procesos y brindando una experiencia premium.",
     highlights: [
-      "Consultas automáticas de inventario",
-      "Respuestas inteligentes con IA",
-      "Disponibilidad 24/7 para clientes",
-      "Fácil de actualizar vía Excel",
+      "Plataforma SaaS integral",
+      "Interfaz moderna, rápida y dinámica",
+      "Alta escalabilidad y rendimiento",
+      "Gestión de equipos y permisos",
     ],
   },
   {
@@ -71,24 +70,7 @@ export const projects = [
       "Enfoque en conversión de clientes",
     ],
   },
-  {
-    id: 5,
-    name: "Chatbot de Instagram",
-    desc: "Automatización de mensajes y captación de clientes.",
-    tags: ["Chatbot", "Automation"],
-    techs: ["Node.js", "Instagram API", "Webhooks"],
-    image: "/instagram_bot.webp",
-    detail:
-      "Solución de respuesta automática para Instagram que utiliza palabras clave para enviar información de productos y precios al instante, mejorando el tiempo de respuesta y la retención de usuarios.",
-    webUrl: "https://www.instagram.com/motorepuestosguru/",
-    isChatbot: true,
-    highlights: [
-      "Respuestas rápidas programadas",
-      "Filtro por palabras clave",
-      "Conexión directa con catálogo",
-      "Optimización de ventas por DM",
-    ],
-  },
+
   {
     id: 6,
     name: "Inversiones Duvan",
